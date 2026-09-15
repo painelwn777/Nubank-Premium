@@ -140,7 +140,7 @@
     .teclado-num-fake { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding: 36px; position: fixed; bottom: 0; left: 0; right: 0; text-align: center; max-width: 450px; margin: 0 auto; background: #000; }
     .btn-teclado { font-size: 22px; font-weight: 600; padding: 14px 0; cursor: pointer; }
 
-    /* LOADING / ANIMACAO DE TRANSFERENCIA (Alinhado na parte inferior como no original) */
+    /* LOADING / ANIMACAO DE TRANSFERENCIA (Na parte inferior) */
     .view-tela-loading-nu { background: #000; display: none; flex-direction: column; justify-content: flex-end; min-height: 100vh; padding: 36px 24px 90px 24px; text-align: left; }
     .view-tela-loading-nu.ativa { display: flex; }
     .texto-loading-nu { font-size: 30px; font-weight: 500; color: #fff; margin-bottom: 36px; }
@@ -371,7 +371,7 @@
       <div class="pix-desc">Envie e receba pagamentos a qualquer hora e dia da semana, sem pagar nada por isso.</div>
     </div>
     <div class="pix-area-grid">
-      <div class="pix-area-item" onclick="navegarPara('view-buscar-contato')">
+      <div class="pix-area-item" onclick="prepararTransferenciaPadrao()">
         <div class="pix-area-icon"><span class="material-icons-outlined">north_east</span></div>
         <div class="pix-area-label">Transferir</div>
       </div>
@@ -412,7 +412,7 @@
       <span style="width:24px;"></span>
     </div>
     <div class="config-section">
-      <div class="config-section-title">PERFIL</div>
+      <div class="config-section-title">PERFIL (ORIGEM)</div>
       <div class="photo-upload-container">
         <div class="photo-upload-preview" onclick="document.getElementById('photo-input').click()">
           <img id="profile-photo-preview" style="display:none;">
@@ -421,15 +421,15 @@
         <button class="photo-upload-btn" onclick="document.getElementById('photo-input').click()">Alterar foto</button>
         <input type="file" id="photo-input" accept="image/*" onchange="uploadFoto(event)">
       </div>
-      <div class="config-field"><label class="config-label">Nome completo</label><input type="text" class="config-input" id="cfg-nome-completo" placeholder="Seu nome"></div>
+      <div class="config-field"><label class="config-label">Nome completo (Origem)</label><input type="text" class="config-input" id="cfg-nome-completo" placeholder="Seu nome"></div>
       <div class="config-field"><label class="config-label">CPF (Origem)</label><input type="text" class="config-input" id="cfg-cpf-origem" placeholder="***.428.467-**"></div>
     </div>
     <div class="config-section">
       <div class="config-section-title">DESTINATÁRIO PADRÃO</div>
-      <div class="config-field"><label class="config-label">Nome</label><input type="text" class="config-input" id="cfg-dest-nome" placeholder="Fulano de Tal"></div>
+      <div class="config-field"><label class="config-label">Nome</label><input type="text" class="config-input" id="cfg-dest-nome" placeholder="GABRIELLY CRISTINY CAMARGO BASTOS"></div>
       <div class="config-field"><label class="config-label">CPF</label><input type="text" class="config-input" id="cfg-dest-cpf" placeholder="***.334.497-**"></div>
-      <div class="config-field"><label class="config-label">Banco</label><input type="text" class="config-input" id="cfg-dest-banco" placeholder="Nome do banco"></div>
-      <div class="config-field"><label class="config-label">Chave Pix</label><input type="text" class="config-input" id="cfg-dest-chave" placeholder="Chave Pix"></div>
+      <div class="config-field"><label class="config-label">Banco</label><input type="text" class="config-input" id="cfg-dest-banco" placeholder="CAIXA ECONOMICA FEDERAL"></div>
+      <div class="config-field"><label class="config-label">Chave Pix</label><input type="text" class="config-input" id="cfg-dest-chave" placeholder="+5521987052110"></div>
     </div>
     <div class="config-save-btn"><div class="config-save-btn-inner"><button class="btn-bottom-purple" onclick="salvarConfiguracoesCompleta()">Salvar</button></div></div>
     <div style="height: 80px;"></div>
@@ -472,7 +472,7 @@
       <div class="ad-dots"><div class="ad-dot"></div><div class="ad-dot active"></div><div class="ad-dot"></div></div>
     </div>
     <div class="scroll-horizontal-buttons">
-      <div class="round-action-item" onclick="navegarPara('view-area-pix')"><div class="round-icon-bg"><span class="material-icons-outlined">grid_view</span></div><div class="round-label-text">Área Pix e<br>Transferir</div></div>
+      <div class="round-action-item" onclick="prepararTransferenciaPadrao()"><div class="round-icon-bg"><span class="material-icons-outlined">grid_view</span></div><div class="round-label-text">Área Pix e<br>Transferir</div></div>
       <div class="round-action-item" onclick="alert('Pagar')"><div class="round-icon-bg"><span class="material-icons-outlined">qr_code_2</span></div><div class="round-label-text">Pagar</div></div>
       <div class="round-action-item" onclick="alert('Emprestado')"><div class="round-icon-bg"><span class="material-icons-outlined">handshake</span><span class="badge-fgts">FGTS</span></div><div class="round-label-text">Pegar<br>emprestado</div></div>
       <div class="round-action-item" onclick="alert('Recarga')"><div class="round-icon-bg"><span class="material-icons-outlined">smartphone</span></div><div class="round-label-text">Recarga<br>celular</div></div>
@@ -558,7 +558,7 @@
     <div style="padding:0 20px;">
       <h2 style="font-size:24px;font-weight:700;">Para quem você quer<br>transferir?</h2>
       <p style="color:var(--nu-text-gray);font-size:13px;margin-top:20px;">Insira a chave Pix ou dado de quem vai receber</p>
-      <div style="position:relative;"><input type="text" id="input-chave-pix-input" class="input-busca-contato" placeholder="Insira a chave Pix (CPF, e-mail, telefone, aleatória)" oninput="atualizarChavePixDigitada(this)"><span class="material-icons-outlined" style="position:absolute;right:0;bottom:12px;color:#fff;" onclick="navegarPara('view-scanner-qr')">qr_code_scanner</span></div>
+      <div style="position:relative;"><input type="text" id="input-chave-pix-input" class="input-busca-contato" placeholder="Insira a chave Pix (CPF, e-mail, telefone, aleatória)"><span class="material-icons-outlined" style="position:absolute;right:0;bottom:12px;color:#fff;" onclick="navegarPara('view-scanner-qr')">qr_code_scanner</span></div>
       <p style="color:var(--nu-text-gray);font-size:13px;margin-top:32px;font-weight:600;">Você sempre costuma pagar</p>
       <div style="display:flex;gap:18px;margin-top:14px;overflow-x:auto;padding-bottom:8px;">
         <div style="text-align:center;cursor:pointer;min-width:64px;" onclick="selecionarContatoFrequente('FÁBIO VIEIRA','BANCO RECARGAPAY', '***.111.222-**', '+5521999999999')"><div class="avatar-contato-frequente">FV</div><p style="font-size:11px;font-weight:700;">Fábio Vieira</p></div>
@@ -572,7 +572,7 @@
       <div class="row-contato-lista" onclick="selecionarContatoFrequente('ALLAN ALMADA CUNHA','NUBANK', '***.075.768-**', 'allan.cunha@email.com')"><div class="icon-contato-lista">AA</div><div><p style="font-size:13px;font-weight:600;">Allan Almada Cunha</p></div></div>
     </div>
     <div style="padding:24px 20px 40px 20px;">
-      <button class="btn-bottom-purple" onclick="avancarParaValorComChave()">Continuar</button>
+      <button class="btn-bottom-purple" onclick="usarDestinatarioConfigurado()">Usar Destinatário Configurado</button>
     </div>
   </div>
 
@@ -690,7 +690,7 @@
     <div class="comp-item-row"><div class="comp-item-label">Chave Pix</div><div class="comp-item-value" id="c-real-dest-chave">+5521987052110</div></div>
     <div class="comp-section-divider"></div>
     <div class="comp-section-title">Origem</div>
-    <div class="comp-item-row"><div class="comp-item-label">Nome</div><div class="comp-item-value" id="c-real-ori-nome">Bryan Lyncon da Silva Pereira</div></div>
+    <div class="comp-item-row"><div class="comp-item-label">Nome</div><div class="comp-item-value" id="c-real-ori-nome">Wabner dos Santos Pereira</div></div>
     <div class="comp-item-row"><div class="comp-item-label">Instituição</div><div class="comp-item-value">NU PAGAMENTOS - IP</div></div>
     <div class="comp-item-row"><div class="comp-item-label">CPF</div><div class="comp-item-value editavel-toque" id="c-real-ori-cpf" onclick="editarCpfOrigemComp()">***.428.467-**</div></div>
     <div class="comp-gray-footer">
@@ -758,7 +758,7 @@
       <div class="nav-circle-purple"><span class="material-icons-outlined" style="font-size:20px;">swap_vert</span></div>
     </div>
     <div class="nav-item" style="justify-content:center;font-size:20px;"><span class="material-icons-outlined">attach_money</span></div>
-    <div class="nav-item" onclick="navegarPara('view-area-pix')" style="justify-content:center;font-size:20px;cursor:pointer;">
+    <div class="nav-item" onclick="prepararTransferenciaPadrao()" style="justify-content:center;font-size:20px;cursor:pointer;">
       <span class="material-icons-outlined" style="font-size:22px;">qr_code_2</span>
     </div>
     <div class="nav-item" onclick="alert('Cartões/Conta')" style="justify-content:center;font-size:20px;cursor:pointer;">
@@ -768,11 +768,14 @@
 
   <script>
     let saldoEscondido = false;
-    let nomeDestinatarioGlobal = "GABRIELLY CRISTINY CAMARGO BASTOS";
-    let bancoDestinatarioGlobal = "CAIXA ECONOMICA FEDERAL";
-    let cpfDestinatarioGlobal = "***.334.497-**";
-    let chavePixGlobal = "+5521987052110";
+    let nomeOrigemGlobal = "Wabner dos Santos Pereira";
     let cpfOrigemGlobal = "***.428.467-**";
+    
+    let nomeDestinatarioGlobal = "GABRIELLY CRISTINY CAMARGO BASTOS";
+    let cpfDestinatarioGlobal = "***.334.497-**";
+    let bancoDestinatarioGlobal = "CAIXA ECONOMICA FEDERAL";
+    let chavePixGlobal = "+5521987052110";
+
     let senhaDigitada = "";
     let profilePhotoData = null;
     let intervaloNotif = null;
@@ -889,11 +892,13 @@
       }
     }
 
-    function atualizarChavePixDigitada(el) {
-      chavePixGlobal = el.value;
+    function prepararTransferenciaPadrao() {
+      document.getElementById('txt-valor-destinatario').textContent = nomeDestinatarioGlobal;
+      document.getElementById('txt-valor-destinatario-chave').textContent = "Chave: " + chavePixGlobal;
+      navegarPara('view-inserir-valor');
     }
 
-    function avancarParaValorComChave() {
+    function usarDestinatarioConfigurado() {
       let inputVal = document.getElementById('input-chave-pix-input').value.trim();
       if (inputVal !== "") {
         chavePixGlobal = inputVal;
@@ -948,9 +953,10 @@
     }
 
     function editarNomeHome() {
-      let nomeCfg = document.getElementById('cfg-nome-completo').value || 'Seu Nome';
-      let novo = prompt("Seu nome:", nomeCfg);
+      let nomeCfg = document.getElementById('cfg-nome-completo').value || nomeOrigemGlobal;
+      let novo = prompt("Seu nome (Origem):", nomeCfg);
       if (novo !== null && novo !== "") { 
+        nomeOrigemGlobal = novo;
         document.getElementById('cfg-nome-completo').value = novo; 
         document.getElementById('nu-username').textContent = "Olá, " + novo.split(' ')[0]; 
         salvarConfig(); 
@@ -962,6 +968,8 @@
       if (novo !== null && novo !== "") {
         cpfDestinatarioGlobal = novo;
         document.getElementById('c-real-dest-cpf').textContent = novo;
+        document.getElementById('cfg-dest-cpf').value = novo;
+        salvarConfig();
       }
     }
 
@@ -971,6 +979,7 @@
         cpfOrigemGlobal = novo;
         document.getElementById('c-real-ori-cpf').textContent = novo;
         document.getElementById('cfg-cpf-origem').value = novo;
+        salvarConfig();
       }
     }
 
@@ -1067,6 +1076,8 @@
         nomeDestinatarioGlobal = novo;
         document.getElementById('txt-valor-destinatario').textContent = novo;
         document.getElementById('rev-txt-nome').textContent = novo;
+        document.getElementById('cfg-dest-nome').value = novo;
+        salvarConfig();
       }
     }
 
@@ -1075,6 +1086,8 @@
       if(novo) {
         bancoDestinatarioGlobal = novo;
         document.getElementById('rev-txt-banco').textContent = novo;
+        document.getElementById('cfg-dest-banco').value = novo;
+        salvarConfig();
       }
     }
 
@@ -1119,6 +1132,7 @@
     function salvarConfiguracoesCompleta() {
       let nome = document.getElementById('cfg-nome-completo').value;
       if(nome) {
+        nomeOrigemGlobal = nome;
         document.getElementById('nu-username').textContent = "Olá, " + nome.split(' ')[0];
       }
       let cpfOrigem = document.getElementById('cfg-cpf-origem').value;
@@ -1135,6 +1149,7 @@
 
       salvarConfig();
       fecharConfigCompleta();
+      alert('Configurações salvas com sucesso!');
     }
 
     function uploadFoto(e) {
@@ -1157,18 +1172,67 @@
     }
 
     function salvarConfig() {
-      localStorage.setItem('nu_nome', document.getElementById('cfg-nome-completo').value);
+      localStorage.setItem('nu_nome', nomeOrigemGlobal);
       localStorage.setItem('nu_saldo', document.getElementById('nu-saldo-main').getAttribute('data-valor'));
       localStorage.setItem('nu_foto', profilePhotoData || '');
       localStorage.setItem('nu_cpf_origem', cpfOrigemGlobal);
+
+      localStorage.setItem('nu_dest_nome', nomeDestinatarioGlobal);
+      localStorage.setItem('nu_dest_cpf', cpfDestinatarioGlobal);
+      localStorage.setItem('nu_dest_banco', bancoDestinatarioGlobal);
+      localStorage.setItem('nu_dest_chave', chavePixGlobal);
     }
 
     function carregarConfig() {
       let nome = localStorage.getItem('nu_nome');
       if(nome) {
+        nomeOrigemGlobal = nome;
         document.getElementById('cfg-nome-completo').value = nome;
         document.getElementById('nu-username').textContent = "Olá, " + nome.split(' ')[0];
+      } else {
+        document.getElementById('cfg-nome-completo').value = nomeOrigemGlobal;
       }
+
+      let cpfOrg = localStorage.getItem('nu_cpf_origem');
+      if(cpfOrg) {
+        cpfOrigemGlobal = cpfOrg;
+        document.getElementById('cfg-cpf-origem').value = cpfOrg;
+      } else {
+        document.getElementById('cfg-cpf-origem').value = cpfOrigemGlobal;
+      }
+
+      let destNome = localStorage.getItem('nu_dest_nome');
+      if(destNome) {
+        nomeDestinatarioGlobal = destNome;
+        document.getElementById('cfg-dest-nome').value = destNome;
+      } else {
+        document.getElementById('cfg-dest-nome').value = nomeDestinatarioGlobal;
+      }
+
+      let destCpf = localStorage.getItem('nu_dest_cpf');
+      if(destCpf) {
+        cpfDestinatarioGlobal = destCpf;
+        document.getElementById('cfg-dest-cpf').value = destCpf;
+      } else {
+        document.getElementById('cfg-dest-cpf').value = cpfDestinatarioGlobal;
+      }
+
+      let destBanco = localStorage.getItem('nu_dest_banco');
+      if(destBanco) {
+        bancoDestinatarioGlobal = destBanco;
+        document.getElementById('cfg-dest-banco').value = destBanco;
+      } else {
+        document.getElementById('cfg-dest-banco').value = bancoDestinatarioGlobal;
+      }
+
+      let destChave = localStorage.getItem('nu_dest_chave');
+      if(destChave) {
+        chavePixGlobal = destChave;
+        document.getElementById('cfg-dest-chave').value = destChave;
+      } else {
+        document.getElementById('cfg-dest-chave').value = chavePixGlobal;
+      }
+
       let saldo = localStorage.getItem('nu_saldo');
       if(saldo) {
         let val = parseFloat(saldo);
@@ -1177,6 +1241,7 @@
         document.getElementById('nu-saldo-tela2').setAttribute('data-valor', val.toFixed(2));
         document.getElementById('nu-saldo-tela2').textContent = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
       }
+
       let foto = localStorage.getItem('nu_foto');
       if(foto) {
         profilePhotoData = foto;
@@ -1187,11 +1252,6 @@
         document.getElementById('header-profile-photo').src = foto;
         document.getElementById('header-profile-photo').style.display = 'block';
         document.getElementById('header-profile-icon').style.display = 'none';
-      }
-      let cpfOrg = localStorage.getItem('nu_cpf_origem');
-      if(cpfOrg) {
-        cpfOrigemGlobal = cpfOrg;
-        document.getElementById('cfg-cpf-origem').value = cpfOrg;
       }
     }
 
@@ -1251,10 +1311,15 @@
     function gerarEIrParaComprovante() {
       let valorEnvio = document.getElementById('input-dinheiro-fluxo').value;
       document.getElementById('c-real-valor').textContent = valorEnvio;
+      
+      // Aplica perfeitamente os dados do destinatário configurados
       document.getElementById('c-real-dest-nome').textContent = nomeDestinatarioGlobal.toUpperCase();
       document.getElementById('c-real-dest-banco').textContent = bancoDestinatarioGlobal.toUpperCase();
       document.getElementById('c-real-dest-cpf').textContent = cpfDestinatarioGlobal;
       document.getElementById('c-real-dest-chave').textContent = chavePixGlobal;
+      
+      // Aplica os dados de origem configurados
+      document.getElementById('c-real-ori-nome').textContent = nomeOrigemGlobal;
       document.getElementById('c-real-ori-cpf').textContent = cpfOrigemGlobal;
       
       let idGerado = 'E1823612020260914' + Math.floor(Math.random() * 900000000 + 100000000) + 's194dca9132';
