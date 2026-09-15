@@ -330,7 +330,19 @@
     .scanner-info { background: #1c1c1e; padding: 16px; border-radius: 14px; text-align: center; }
     .scanner-info p { font-size: 14px; color: var(--nu-text-gray); margin-bottom: 10px; }
     .scanner-btn { background: var(--nu-purple); color: #fff; border: none; padding: 14px 28px; border-radius: 22px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 10px; }
-  </style>
+  
+/* Dialogo interno para edição de saldo (evita prompt nativo do navegador) */
+.edit-dialog-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.48);display:none;align-items:center;justify-content:center;z-index:99999;padding:20px;box-sizing:border-box}
+.edit-dialog-backdrop.ativo{display:flex}
+.edit-dialog{width:min(420px,100%);background:#fff;border-radius:22px;padding:22px;box-sizing:border-box;box-shadow:0 16px 50px rgba(0,0,0,.35)}
+.edit-dialog h3{margin:0 0 8px;font-size:20px}
+.edit-dialog p{margin:0 0 16px;color:#666;font-size:14px}
+.edit-dialog input{width:100%;box-sizing:border-box;border:1px solid #ccc;border-radius:12px;padding:13px 14px;font-size:18px;outline:none}
+.edit-dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+.edit-dialog-actions button{border:0;border-radius:12px;padding:11px 18px;font-size:15px;cursor:pointer}
+.edit-dialog-cancel{background:#eee}.edit-dialog-ok{background:#820ad1;color:#fff}
+
+</style>
 </head>
 <body>
 
@@ -558,7 +570,15 @@
     <div style="padding:0 20px;">
       <h2 style="font-size:24px;font-weight:700;">Para quem você quer<br>transferir?</h2>
       <p style="color:var(--nu-text-gray);font-size:13px;margin-top:20px;">Insira a chave Pix ou dado de quem vai receber</p>
-      <div style="position:relative;"><input type="text" id="input-chave-pix-input" class="input-busca-contato" placeholder="Insira a chave Pix (CPF, e-mail, telefone, aleatória)"><span class="material-icons-outlined" style="position:absolute;right:0;bottom:12px;color:#fff;" onclick="navegarPara('view-scanner-qr')">qr_code_scanner</span></div>
+      <div style="position:relative;">
+        <input type="text" id="input-chave-pix-input" class="input-busca-contato" placeholder="Insira a chave Pix (CPF, e-mail, telefone, aleatória)" autocomplete="off">
+        <span class="material-icons-outlined" style="position:absolute;right:0;bottom:12px;color:#fff;" onclick="navegarPara('view-scanner-qr')">qr_code_scanner</span>
+      </div>
+      <div id="pix-destinatario-encontrado" style="display:none;margin-top:14px;background:#1c1c1e;border-radius:12px;padding:14px;">
+        <div style="font-size:11px;color:#888;margin-bottom:5px;">Destinatário</div>
+        <div id="pix-dest-nome-encontrado" style="font-size:14px;font-weight:700;"></div>
+        <div id="pix-dest-banco-encontrado" style="font-size:12px;color:#999;margin-top:3px;"></div>
+      </div>
       <p style="color:var(--nu-text-gray);font-size:13px;margin-top:32px;font-weight:600;">Você sempre costuma pagar</p>
       <div style="display:flex;gap:18px;margin-top:14px;overflow-x:auto;padding-bottom:8px;">
         <div style="text-align:center;cursor:pointer;min-width:64px;" onclick="selecionarContatoFrequente('FÁBIO VIEIRA','BANCO RECARGAPAY', '***.111.222-**', '+5521999999999')"><div class="avatar-contato-frequente">FV</div><p style="font-size:11px;font-weight:700;">Fábio Vieira</p></div>
@@ -572,7 +592,7 @@
       <div class="row-contato-lista" onclick="selecionarContatoFrequente('ALLAN ALMADA CUNHA','NUBANK', '***.075.768-**', 'allan.cunha@email.com')"><div class="icon-contato-lista">AA</div><div><p style="font-size:13px;font-weight:600;">Allan Almada Cunha</p></div></div>
     </div>
     <div style="padding:24px 20px 40px 20px;">
-      <button class="btn-bottom-purple" onclick="usarDestinatarioConfigurado()">Usar Destinatário Configurado</button>
+      <button class="btn-bottom-purple" onclick="usarDestinatarioConfigurado()">Continuar</button>
     </div>
   </div>
 
@@ -584,7 +604,7 @@
       <h3 style="font-size:17px;font-weight:700;margin-top:3px;" class="editavel-toque" id="txt-valor-destinatario" onclick="editarNomeDireto()">Fulano de Tal</h3>
       <p style="color:var(--nu-text-gray);font-size:12px;margin-top:2px;" id="txt-valor-destinatario-chave">Chave: Pix</p>
       <p style="color:var(--nu-text-gray);font-size:13px;margin-top:32px;">Valor</p>
-      <input type="text" id="input-dinheiro-fluxo" value="R$ 50,00" style="background:none;border:none;color:#fff;font-size:36px;font-weight:700;width:100%;outline:none;margin-top:6px;" oninput="mascaraMoeda(this)">
+      <input type="text" id="input-dinheiro-fluxo" value="R$ 0,00" style="background:none;border:none;color:#fff;font-size:36px;font-weight:700;width:100%;outline:none;margin-top:6px;" oninput="mascaraMoeda(this)">
       <p style="color:var(--nu-text-gray);font-size:13px;margin-top:22px;">Pagando com</p>
       <div class="card-saldo-pagamento"><div style="width:34px;height:34px;background:#2c1f3d;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#b388ff;"><span class="material-icons-outlined" style="font-size:18px;">monetization_on</span></div><div><p style="font-size:14px;font-weight:700;color:#b388ff;">Saldo Nubank</p><p style="font-size:12px;color:var(--nu-text-gray)" id="txt-saldo-card-fluxo">Atual: R$ 23.546,65</p></div></div>
     </div>
@@ -596,13 +616,13 @@
     <div style="padding:18px 20px;"><span class="material-icons-outlined" style="cursor:pointer;" onclick="navegarPara('view-inserir-valor')">arrow_back</span></div>
     <div style="padding:0 20px;">
       <h2 style="font-size:24px;font-weight:700;margin-bottom:24px;">Você vai enviar</h2>
-      <div class="edit-step-container"><div><h1 style="font-size:24px;font-weight:700;" id="rev-txt-valor">R$ 50,00</h1><p style="font-size:12px;color:var(--nu-text-gray);">Saldo Nubank</p></div><span class="material-icons-outlined" style="color:var(--nu-text-gray);font-size:20px;">edit</span></div>
+      <div class="edit-step-container"><div><h1 style="font-size:24px;font-weight:700;" id="rev-txt-valor">R$ 0,00</h1><p style="font-size:12px;color:var(--nu-text-gray);">Saldo Nubank</p></div><span class="material-icons-outlined" style="color:var(--nu-text-gray);font-size:20px;">edit</span></div>
       <div class="edit-step-container" style="margin-top:14px;"><div style="width:90%;"><p style="font-size:15px;font-weight:700;color:#b388ff;" class="editavel-toque" id="rev-txt-nome" onclick="editarNomeDireto()">Fulano de Tal</p><p style="font-size:12px;color:var(--nu-text-gray);margin-top:3px;" class="editavel-toque" id="rev-txt-banco" onclick="editarBancoDireto()">Banco</p><p style="font-size:12px;color:var(--nu-text-gray);margin-top:2px;" id="rev-txt-chave">Chave: Pix</p></div><span class="material-icons-outlined" style="color:var(--nu-text-gray);font-size:20px;">edit</span></div>
       <div style="margin-top:18px;font-size:13px;display:flex;justify-content:space-between;color:var(--nu-text-gray);"><span>Quando</span><span style="color:#fff;font-weight:600;">Agora, sem repetir</span></div>
       <div style="margin-top:14px;font-size:13px;display:flex;justify-content:space-between;color:var(--nu-text-gray);"><span>Via</span><span style="color:#fff;font-weight:600;">Pix</span></div>
     </div>
     <div style="padding:24px 20px 40px 20px;display:flex;justify-content:space-between;align-items:center;">
-      <div><p style="font-size:12px;color:var(--nu-text-gray);">Valor Total</p><p style="font-size:19px;font-weight:700;" id="rev-txt-valor-total">R$ 50,00</p></div>
+      <div><p style="font-size:12px;color:var(--nu-text-gray);">Valor Total</p><p style="font-size:19px;font-weight:700;" id="rev-txt-valor-total">R$ 0,00</p></div>
       <button class="btn-bottom-purple" style="width:140px;" onclick="navegarPara('view-senha-4digitos')">Enviar</button>
     </div>
   </div>
@@ -795,6 +815,49 @@
       inputs.forEach(input => {
         input.addEventListener('focus', function() { this.select(); });
       });
+
+      const chaveInput = document.getElementById('input-chave-pix-input');
+      if (chaveInput) {
+        chaveInput.addEventListener('input', function() {
+          consultarDestinatarioConfigurado(this.value);
+        });
+        chaveInput.addEventListener('blur', function() {
+          consultarDestinatarioConfigurado(this.value);
+        });
+      }
+    }
+
+    function normalizarChavePix(valor) {
+      return String(valor || '')
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '');
+    }
+
+    // Consulta local/demo: usa exatamente os dados salvos em Configurações.
+    // Uma página HTML sozinha não consegue consultar o DICT do Pix de um banco.
+    function consultarDestinatarioConfigurado(valor) {
+      const chaveDigitada = normalizarChavePix(valor);
+      const chaveConfigurada = normalizarChavePix(chavePixGlobal);
+      const card = document.getElementById('pix-destinatario-encontrado');
+
+      if (!card) return;
+
+      if (chaveDigitada && chaveConfigurada && chaveDigitada === chaveConfigurada) {
+        nomeDestinatarioGlobal = document.getElementById('cfg-dest-nome')?.value.trim() || nomeDestinatarioGlobal;
+        cpfDestinatarioGlobal = document.getElementById('cfg-dest-cpf')?.value.trim() || cpfDestinatarioGlobal;
+        bancoDestinatarioGlobal = document.getElementById('cfg-dest-banco')?.value.trim() || bancoDestinatarioGlobal;
+        chavePixGlobal = document.getElementById('cfg-dest-chave')?.value.trim() || chavePixGlobal;
+
+        document.getElementById('pix-dest-nome-encontrado').textContent = nomeDestinatarioGlobal;
+        document.getElementById('pix-dest-banco-encontrado').textContent =
+          bancoDestinatarioGlobal + (cpfDestinatarioGlobal ? ' • ' + cpfDestinatarioGlobal : '');
+        card.style.display = 'block';
+        return true;
+      }
+
+      card.style.display = 'none';
+      return false;
     }
 
     function solicitarPermissaoNotificacao() {
@@ -893,18 +956,42 @@
     }
 
     function prepararTransferenciaPadrao() {
-      document.getElementById('txt-valor-destinatario').textContent = nomeDestinatarioGlobal;
-      document.getElementById('txt-valor-destinatario-chave').textContent = "Chave: " + chavePixGlobal;
-      navegarPara('view-inserir-valor');
+      // Ao iniciar um Pix, primeiro mostra a tela para digitar a chave.
+      // Os dados do destinatário só são identificados depois que a chave é informada.
+      const chaveInput = document.getElementById('input-chave-pix-input');
+      const card = document.getElementById('pix-destinatario-encontrado');
+      if (chaveInput) chaveInput.value = '';
+      if (card) card.style.display = 'none';
+      navegarPara('view-buscar-contato');
+      setTimeout(() => {
+        if (chaveInput) chaveInput.focus();
+      }, 100);
+    }
+
+    function sincronizarDestinatarioDasConfiguracoes() {
+      const nome = document.getElementById('cfg-dest-nome')?.value.trim();
+      const cpf = document.getElementById('cfg-dest-cpf')?.value.trim();
+      const banco = document.getElementById('cfg-dest-banco')?.value.trim();
+      const chave = document.getElementById('cfg-dest-chave')?.value.trim();
+
+      if (nome) nomeDestinatarioGlobal = nome;
+      if (cpf) cpfDestinatarioGlobal = cpf;
+      if (banco) bancoDestinatarioGlobal = banco;
+      if (chave) chavePixGlobal = chave;
     }
 
     function usarDestinatarioConfigurado() {
-      let inputVal = document.getElementById('input-chave-pix-input').value.trim();
+      const inputVal = document.getElementById('input-chave-pix-input').value.trim();
+
       if (inputVal !== "") {
-        chavePixGlobal = inputVal;
-        nomeDestinatarioGlobal = inputVal;
-        bancoDestinatarioGlobal = "Instituição Parceira";
+        const encontrado = consultarDestinatarioConfigurado(inputVal);
+
+        if (!encontrado) {
+          alert('A chave informada não corresponde à chave cadastrada em Configurações.');
+          return;
+        }
       }
+
       document.getElementById('txt-valor-destinatario').textContent = nomeDestinatarioGlobal;
       document.getElementById('txt-valor-destinatario-chave').textContent = "Chave: " + chavePixGlobal;
       navegarPara('view-inserir-valor');
@@ -918,6 +1005,31 @@
       document.getElementById('txt-valor-destinatario').textContent = nomeDestinatarioGlobal;
       document.getElementById('txt-valor-destinatario-chave').textContent = "Chave: " + chavePixGlobal;
       navegarPara('view-inserir-valor');
+    }
+
+
+    function mascaraMoeda(input) {
+      let digits = String(input.value || '').replace(/\D/g, '');
+
+      // Mantém o campo sempre válido e começa em R$ 0,00.
+      if (!digits) digits = '0';
+
+      // Remove zeros à esquerda sem apagar o zero necessário.
+      digits = digits.replace(/^0+(?=\d)/, '');
+
+      const centavos = parseInt(digits, 10) || 0;
+      const valor = centavos / 100;
+
+      input.value = valor.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2
+      });
+
+      // Mantém o cursor no final, como em uma máscara de moeda.
+      try {
+        input.setSelectionRange(input.value.length, input.value.length);
+      } catch (e) {}
     }
 
     function avancarParaRevisao() {
@@ -984,21 +1096,39 @@
     }
 
     function editarSaldoHome() {
-      let atual = document.getElementById('nu-saldo-main').getAttribute('data-valor');
-      let novo = prompt("Novo saldo:", atual);
-      if (novo !== null && novo !== "") {
-        let val = parseFloat(novo.replace(',', '.'));
-        if (!isNaN(val)) {
-          document.getElementById('nu-saldo-main').setAttribute('data-valor', val.toFixed(2));
-          document.getElementById('nu-saldo-tela2').setAttribute('data-valor', val.toFixed(2));
-          if (!saldoEscondido) {
-            document.getElementById('nu-saldo-main').textContent = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            document.getElementById('nu-saldo-tela2').textContent = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-          }
-          salvarConfig();
-        }
-      }
+      const atual = document.getElementById('nu-saldo-main').getAttribute('data-valor') || '0.00';
+      const input = document.getElementById('saldo-edit-input');
+      const dialog = document.getElementById('saldo-edit-dialog');
+      if (!input || !dialog) return;
+      input.value = Number(atual).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      dialog.classList.add('ativo');
+      dialog.setAttribute('aria-hidden', 'false');
+      setTimeout(() => { input.focus(); input.select(); }, 0);
     }
+
+    function fecharEditarSaldo() {
+      const dialog = document.getElementById('saldo-edit-dialog');
+      if (dialog) { dialog.classList.remove('ativo'); dialog.setAttribute('aria-hidden', 'true'); }
+    }
+
+    function confirmarEditarSaldo() {
+      const input = document.getElementById('saldo-edit-input');
+      if (!input) return;
+      let bruto = input.value.replace(/[^0-9,.-]/g, '').trim();
+      if (bruto.includes(',')) bruto = bruto.replace(/\./g, '').replace(',', '.');
+      const val = parseFloat(bruto);
+      if (!Number.isFinite(val) || val < 0) return;
+      const valor = val.toFixed(2);
+      document.getElementById('nu-saldo-main').setAttribute('data-valor', valor);
+      document.getElementById('nu-saldo-tela2').setAttribute('data-valor', valor);
+      if (!saldoEscondido) {
+        document.getElementById('nu-saldo-main').textContent = val.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+        document.getElementById('nu-saldo-tela2').textContent = val.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+      }
+      salvarConfig();
+      fecharEditarSaldo();
+    }
+
 
     function editarSaldoSeparado() {
       let atual = document.getElementById('nu-saldo-separado').getAttribute('data-valor');
@@ -1124,6 +1254,14 @@
 
     function abrirConfigCompleta() {
       document.getElementById('tela-config-completa').classList.add('ativa');
+
+      // Mostra na tela exatamente o que está ativo, inclusive o destinatário.
+      document.getElementById('cfg-nome-completo').value = nomeOrigemGlobal;
+      document.getElementById('cfg-cpf-origem').value = cpfOrigemGlobal;
+      document.getElementById('cfg-dest-nome').value = nomeDestinatarioGlobal;
+      document.getElementById('cfg-dest-cpf').value = cpfDestinatarioGlobal;
+      document.getElementById('cfg-dest-banco').value = bancoDestinatarioGlobal;
+      document.getElementById('cfg-dest-chave').value = chavePixGlobal;
     }
     function fecharConfigCompleta() {
       document.getElementById('tela-config-completa').classList.remove('ativa');
@@ -1138,14 +1276,15 @@
       let cpfOrigem = document.getElementById('cfg-cpf-origem').value;
       if(cpfOrigem) cpfOrigemGlobal = cpfOrigem;
       
-      let destNome = document.getElementById('cfg-dest-nome').value;
-      if(destNome) nomeDestinatarioGlobal = destNome;
-      let destCpf = document.getElementById('cfg-dest-cpf').value;
-      if(destCpf) cpfDestinatarioGlobal = destCpf;
-      let destBanco = document.getElementById('cfg-dest-banco').value;
-      if(destBanco) bancoDestinatarioGlobal = destBanco;
-      let destChave = document.getElementById('cfg-dest-chave').value;
-      if(destChave) chavePixGlobal = destChave;
+      let destNome = document.getElementById('cfg-dest-nome').value.trim();
+      let destCpf = document.getElementById('cfg-dest-cpf').value.trim();
+      let destBanco = document.getElementById('cfg-dest-banco').value.trim();
+      let destChave = document.getElementById('cfg-dest-chave').value.trim();
+
+      nomeDestinatarioGlobal = destNome;
+      cpfDestinatarioGlobal = destCpf;
+      bancoDestinatarioGlobal = destBanco;
+      chavePixGlobal = destChave;
 
       salvarConfig();
       fecharConfigCompleta();
@@ -1339,5 +1478,18 @@
       navegarPara('view-comprovante-final');
     }
   </script>
+
+<div id="saldo-edit-dialog" class="edit-dialog-backdrop" aria-hidden="true">
+  <div class="edit-dialog" role="dialog" aria-modal="true" aria-labelledby="saldo-edit-title">
+    <h3 id="saldo-edit-title">Editar saldo</h3>
+    <p>Informe o novo saldo da conta.</p>
+    <input id="saldo-edit-input" type="text" inputmode="decimal" autocomplete="off" placeholder="0,00">
+    <div class="edit-dialog-actions">
+      <button type="button" class="edit-dialog-cancel" onclick="fecharEditarSaldo()">Cancelar</button>
+      <button type="button" class="edit-dialog-ok" onclick="confirmarEditarSaldo()">Salvar</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
