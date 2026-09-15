@@ -5,15 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Nubank</title>
   
-  <!-- PWA: Configurações de Status Bar e Ícones -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#5f259f">
-  <meta name="msapplication-navbutton-color" content="#5f259f">
-  <meta name="application-name" content="Nubank">
-  <meta name="apple-mobile-web-app-title" content="Nubank">
   
-  <!-- Ícones PWA (arquivos locais na mesma pasta) -->
   <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
   <link rel="apple-touch-icon" href="./icon-192.png">
   
@@ -45,17 +40,18 @@
       padding-bottom: env(safe-area-inset-bottom);
     }
     
-    /* Status bar iOS */
     @supports (-webkit-touch-callout: none) {
-      header { padding-top: max(20px, env(safe-area-inset-top)); }    }
+      header { padding-top: max(20px, env(safe-area-inset-top)); }
+    }
     
     .notification-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: #2c2c2e; border-radius: 14px; padding: 14px 16px; z-index: 10000; display: flex; align-items: center; gap: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.6); transition: top 0.4s; max-width: 92%; width: 340px; }
     .notification-toast.show { top: 16px; }
-    .notification-nu-logo { width: 36px; height: 36px; background: var(--nu-purple); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .notification-nu-logo { width: 36px; height: 36px; background: transparent; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+    .notification-nu-logo img { width: 100%; height: 100%; object-fit: contain; }
     .notification-content h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 1px; }
     .notification-content p { font-size: 11px; color: #aaa; }
 
-    .view-tela { display: none; background: #000; min-height: 100vh; padding-bottom: 80px; }
+    .view-tela { display: none; background: #000; min-height: 100vh; padding-bottom: 90px; }
     .view-tela.ativa { display: block; }
     .editavel-toque { cursor: pointer; transition: opacity 0.2s; }
     .editavel-toque:active { opacity: 0.6; }
@@ -96,7 +92,8 @@
     .ad-banner-carousel.purple-gradient { background: linear-gradient(135deg, #1c1c1e 0%, #2a1a4e 100%); }
     .ad-banner-carousel.purple-gradient::after { content: ''; position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(130, 10, 209, 0.15); border-radius: 50%; }
     .ad-dots { display: flex; gap: 5px; margin-top: 14px; justify-content: center; }
-    .ad-dot { width: 5px; height: 5px; border-radius: 50%; background: #444; }    .ad-dot.active { background: #fff; }
+    .ad-dot { width: 5px; height: 5px; border-radius: 50%; background: #444; }
+    .ad-dot.active { background: #fff; }
 
     .scroll-horizontal-buttons { display: flex; overflow-x: auto; padding: 22px 20px; gap: 14px; }
     .scroll-horizontal-buttons::-webkit-scrollbar { display: none; }
@@ -143,9 +140,11 @@
     .teclado-num-fake { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding: 36px; position: fixed; bottom: 0; left: 0; right: 0; text-align: center; max-width: 450px; margin: 0 auto; background: #000; }
     .btn-teclado { font-size: 22px; font-weight: 600; padding: 14px 0; cursor: pointer; }
 
-    .view-tela-loading-nu { background: #000; display: none; flex-direction: column; justify-content: flex-end; min-height: 100vh; padding: 36px 24px 90px 24px; }
+    /* LOADING / ANIMACAO DE TRANSFERENCIA (Alinhado na parte inferior como no original) */
+    .view-tela-loading-nu { background: #000; display: none; flex-direction: column; justify-content: flex-end; min-height: 100vh; padding: 36px 24px 90px 24px; text-align: left; }
     .view-tela-loading-nu.ativa { display: flex; }
-    .texto-loading-nu { font-size: 30px; font-weight: 500; color: #fff; margin-bottom: 36px; }    .barra-progresso-container { width: 100%; height: 3px; background: #222; border-radius: 2px; overflow: hidden; }
+    .texto-loading-nu { font-size: 30px; font-weight: 500; color: #fff; margin-bottom: 36px; }
+    .barra-progresso-container { width: 100%; height: 3px; background: #222; border-radius: 2px; overflow: hidden; }
     .barra-progresso-purple { width: 0%; height: 100%; background: var(--nu-purple-light); transition: width linear; }
 
     .view-sucesso-novo { background: #000 !important; min-height: 100vh; padding: 0; }
@@ -170,8 +169,8 @@
     .comp-header-area { padding: 28px 22px 0 22px; position: relative; }
     .comp-top-row { display: flex; justify-content: space-between; align-items: center; }
     .comp-logo-area { display: flex; align-items: center; gap: 5px; }
-    .comp-logo-nu { font-size: 30px; font-weight: 800; color: #000; letter-spacing: -0.5px; line-height: 1; }
-    .comp-logo-check { display: inline-flex; width: 18px; height: 18px; background: #666; color: #fff; border-radius: 50%; font-size: 11px; align-items: center; justify-content: center; margin-left: 1px; }
+    .comp-logo-nu { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; }
+    .comp-logo-nu img { width: 100%; height: 100%; object-fit: contain; }
     .comp-actions { display: flex; gap: 8px; }
     .comp-actions.esconder { display: none !important; }
     .comp-btn { width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
@@ -243,7 +242,8 @@
     .descubra-cards { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; }
     .descubra-cards::-webkit-scrollbar { display: none; }
     .descubra-card { min-width: 200px; background: #1c1c1e; border-radius: 14px; overflow: hidden; cursor: pointer; flex-shrink: 0; }
-    .descubra-card-img { width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; }    .descubra-card-img.seguro-vida { background: linear-gradient(135deg, #1a1a2e, #2d2d44); }
+    .descubra-card-img { width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; }
+    .descubra-card-img.seguro-vida { background: linear-gradient(135deg, #1a1a2e, #2d2d44); }
     .descubra-card-img.seguro-area { background: linear-gradient(135deg, #820ad1, #5f259f); }
     .descubra-card-content { padding: 14px; }
     .descubra-card-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
@@ -269,14 +269,15 @@
     .notif-preview-icon {
       width: 44px;
       height: 44px;
-      background: var(--nu-purple);
+      background: transparent;
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      overflow: hidden;
     }
-    .notif-preview-icon svg { width: 28px; height: 28px; fill: white; }
+    .notif-preview-icon img { width: 100%; height: 100%; object-fit: contain; }
     .notif-preview-text h4 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 3px; }
     .notif-preview-text p { font-size: 13px; color: #aaa; line-height: 1.3; }
     .notif-preview-text p span { color: #fff; font-weight: 600; }
@@ -292,7 +293,8 @@
       color: #000;
       font-size: 18px;
       font-weight: 600;
-      outline: none;    }
+      outline: none;
+    }
     .notif-faker-input::placeholder { color: #999; font-weight: 400; }
     
     .notif-faker-row { display: flex; gap: 12px; margin: 18px 0; }
@@ -328,11 +330,6 @@
     .scanner-info { background: #1c1c1e; padding: 16px; border-radius: 14px; text-align: center; }
     .scanner-info p { font-size: 14px; color: var(--nu-text-gray); margin-bottom: 10px; }
     .scanner-btn { background: var(--nu-purple); color: #fff; border: none; padding: 14px 28px; border-radius: 22px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 10px; }
-
-    .install-banner { position: fixed; bottom: 80px; left: 18px; right: 18px; background: var(--nu-purple); padding: 16px 20px; border-radius: 14px; display: none; z-index: 9998; align-items: center; gap: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-    .install-banner.show { display: flex; }
-    .install-banner-text { flex: 1; font-size: 13px; }
-    .install-banner-btn { background: #fff; color: var(--nu-purple); border: none; padding: 8px 16px; border-radius: 16px; font-weight: 700; font-size: 13px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -340,8 +337,9 @@
   <!-- NOTIFICAÇÃO TOAST -->
   <div id="notification-toast" class="notification-toast">
     <div class="notification-nu-logo">
-      <svg width="24" height="24" viewBox="0 0 100 100"><text x="50" y="72" text-anchor="middle" font-size="70" font-weight="bold" fill="white" font-family="Arial">nu</text></svg>
-    </div>    <div class="notification-content">
+      <img src="./nu-logo.png" alt="Nu">
+    </div>
+    <div class="notification-content">
       <h4>Transferência recebida</h4>
       <p id="notif-texto">Você recebeu R$ <span id="notif-valor-txt">3,00</span> de <span id="notif-nome-txt">Fulano</span></p>
     </div>
@@ -390,7 +388,8 @@
         <div class="pix-area-label">Pix Copia e Cola</div>
       </div>
       <div class="pix-area-item" onclick="alert('Cobrar')">
-        <div class="pix-area-icon"><span class="material-icons-outlined">monetization_on</span></div>        <div class="pix-area-label">Cobrar</div>
+        <div class="pix-area-icon"><span class="material-icons-outlined">monetization_on</span></div>
+        <div class="pix-area-label">Cobrar</div>
       </div>
       <div class="pix-area-item" onclick="alert('Depositar')">
         <div class="pix-area-icon"><span class="material-icons-outlined">file_download</span></div>
@@ -423,12 +422,12 @@
         <input type="file" id="photo-input" accept="image/*" onchange="uploadFoto(event)">
       </div>
       <div class="config-field"><label class="config-label">Nome completo</label><input type="text" class="config-input" id="cfg-nome-completo" placeholder="Seu nome"></div>
-      <div class="config-field"><label class="config-label">CPF (Origem)</label><input type="text" class="config-input" id="cfg-cpf-origem" placeholder="000.000.000-00"></div>
+      <div class="config-field"><label class="config-label">CPF (Origem)</label><input type="text" class="config-input" id="cfg-cpf-origem" placeholder="***.428.467-**"></div>
     </div>
     <div class="config-section">
       <div class="config-section-title">DESTINATÁRIO PADRÃO</div>
       <div class="config-field"><label class="config-label">Nome</label><input type="text" class="config-input" id="cfg-dest-nome" placeholder="Fulano de Tal"></div>
-      <div class="config-field"><label class="config-label">CPF</label><input type="text" class="config-input" id="cfg-dest-cpf" placeholder="000.000.000-00"></div>
+      <div class="config-field"><label class="config-label">CPF</label><input type="text" class="config-input" id="cfg-dest-cpf" placeholder="***.334.497-**"></div>
       <div class="config-field"><label class="config-label">Banco</label><input type="text" class="config-input" id="cfg-dest-banco" placeholder="Nome do banco"></div>
       <div class="config-field"><label class="config-label">Chave Pix</label><input type="text" class="config-input" id="cfg-dest-chave" placeholder="Chave Pix"></div>
     </div>
@@ -439,7 +438,8 @@
   <!-- TELA 1: HOME -->
   <div id="view-home" class="view-tela ativa">
     <header>
-      <div class="header-top-icons">        <button class="profile-circle-btn" onclick="abrirConfigCompleta()">
+      <div class="header-top-icons">
+        <button class="profile-circle-btn" onclick="abrirConfigCompleta()">
           <img id="header-profile-photo" style="display:none;">
           <span class="material-icons-outlined" id="header-profile-icon">person</span>
         </button>
@@ -488,7 +488,8 @@
     <div class="credit-card-section" onclick="alert('Empréstimo')">
       <div class="section-title">Empréstimo</div>
       <div class="section-subtitle">Valor disponível de até</div>
-      <div class="section-value editavel-toque" id="nu-emprestimo" data-valor="50000.00" onclick="editarEmprestimo()">R$ 50.000,00</div>    </div>
+      <div class="section-value editavel-toque" id="nu-emprestimo" data-valor="50000.00" onclick="editarEmprestimo()">R$ 50.000,00</div>
+    </div>
     <div class="credit-card-section" onclick="alert('Seguro')">
       <div class="section-title">Seguro de vida</div>
       <div class="section-subtitle">Conheça Nubank Vida: um seguro simples e que cabe no bolso.</div>
@@ -537,7 +538,8 @@
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
         <div class="section-title" style="margin-bottom:0;font-size:16px;">Histórico</div>
         <div style="display:flex;gap:14px;"><span class="material-icons-outlined" style="color:var(--nu-purple-light);">swap_vert</span><span class="material-icons-outlined" style="color:var(--nu-purple-light);">bar_chart</span></div>
-      </div>      <div class="historico-search"><span class="material-icons-outlined" style="color:#666;font-size:20px;">search</span><input type="text" placeholder="Buscar"></div>
+      </div>
+      <div class="historico-search"><span class="material-icons-outlined" style="color:#666;font-size:20px;">search</span><input type="text" placeholder="Buscar"></div>
     </div>
     <div id="historico-lista">
       <div class="historico-item" onclick="editarItemHistorico(this)"><div class="historico-icon enviada"><span class="material-icons-outlined" style="color:#fff;font-size:18px;">north_east</span></div><div class="historico-info"><div class="historico-titulo">Transferência enviada</div><div class="historico-nome">MICROPAY LTDA</div><div class="historico-valor">R$ 20,00</div><div class="historico-tipo">Pix</div></div><div class="historico-data">Hoje</div></div>
@@ -555,19 +557,22 @@
     <div style="padding:18px 20px;"><span class="material-icons-outlined" style="cursor:pointer;" onclick="navegarPara('view-area-pix')">arrow_back</span></div>
     <div style="padding:0 20px;">
       <h2 style="font-size:24px;font-weight:700;">Para quem você quer<br>transferir?</h2>
-      <p style="color:var(--nu-text-gray);font-size:13px;margin-top:20px;">Insira o dado de quem vai receber</p>
-      <div style="position:relative;"><input type="text" class="input-busca-contato" placeholder="Nome, CPF/CNPJ ou chave Pix" onfocus="avancarParaValor()"><span class="material-icons-outlined" style="position:absolute;right:0;bottom:12px;color:#fff;">qr_code_scanner</span></div>
+      <p style="color:var(--nu-text-gray);font-size:13px;margin-top:20px;">Insira a chave Pix ou dado de quem vai receber</p>
+      <div style="position:relative;"><input type="text" id="input-chave-pix-input" class="input-busca-contato" placeholder="Insira a chave Pix (CPF, e-mail, telefone, aleatória)" oninput="atualizarChavePixDigitada(this)"><span class="material-icons-outlined" style="position:absolute;right:0;bottom:12px;color:#fff;" onclick="navegarPara('view-scanner-qr')">qr_code_scanner</span></div>
       <p style="color:var(--nu-text-gray);font-size:13px;margin-top:32px;font-weight:600;">Você sempre costuma pagar</p>
       <div style="display:flex;gap:18px;margin-top:14px;overflow-x:auto;padding-bottom:8px;">
-        <div style="text-align:center;cursor:pointer;min-width:64px;" onclick="selecionarContatoFrequente('FÁBIO VIEIRA','BANCO RECARGAPAY')"><div class="avatar-contato-frequente">FV</div><p style="font-size:11px;font-weight:700;">Fábio Vieira</p></div>
-        <div style="text-align:center;cursor:pointer;min-width:64px;" onclick="selecionarContatoFrequente('FLÁVIO DUARTE','BANCO INTER')"><div class="avatar-contato-frequente">FD</div><p style="font-size:11px;font-weight:700;">Flávio Duarte</p></div>
-        <div style="text-align:center;cursor:pointer;min-width:64px;" onclick="selecionarContatoFrequente('LUÍS FERNANDO','BCO C6 S.A.')"><div class="avatar-contato-frequente">LF</div><p style="font-size:11px;font-weight:700;">Luís Fernando</p></div>
+        <div style="text-align:center;cursor:pointer;min-width:64px;" onclick="selecionarContatoFrequente('FÁBIO VIEIRA','BANCO RECARGAPAY', '***.111.222-**', '+5521999999999')"><div class="avatar-contato-frequente">FV</div><p style="font-size:11px;font-weight:700;">Fábio Vieira</p></div>
+        <div style="text-align:center;cursor:pointer;min-width:64px;" onclick="selecionarContatoFrequente('FLÁVIO DUARTE','BANCO INTER', '***.222.333-**', '+5521988888888')"><div class="avatar-contato-frequente">FD</div><p style="font-size:11px;font-weight:700;">Flávio Duarte</p></div>
+        <div style="text-align:center;cursor:pointer;min-width:64px;" onclick="selecionarContatoFrequente('LUÍS FERNANDO','BCO C6 S.A.', '***.333.444-**', '+5521977777777')"><div class="avatar-contato-frequente">LF</div><p style="font-size:11px;font-weight:700;">Luís Fernando</p></div>
       </div>
     </div>
     <div style="margin-top:10px;">
-      <div class="row-contato-lista" onclick="selecionarContatoFrequente('GUCCI SHOPPING','BANCO ITAU S.A.')"><div class="icon-contato-lista"><span class="material-icons-outlined">storefront</span></div><div><p style="font-size:13px;font-weight:600;">59.429.182 Gucci Shopping</p></div></div>
-      <div class="row-contato-lista" onclick="selecionarContatoFrequente('ZARA SHOPPING','BANCO BRADESCO')"><div class="icon-contato-lista"><span class="material-icons-outlined">storefront</span></div><div><p style="font-size:13px;font-weight:600;">61.315.182 Zara Shopping</p></div></div>
-      <div class="row-contato-lista" onclick="selecionarContatoFrequente('ALLAN ALMADA CUNHA','NUBANK')"><div class="icon-contato-lista">AA</div><div><p style="font-size:13px;font-weight:600;">Allan Almada Cunha</p></div></div>
+      <div class="row-contato-lista" onclick="selecionarContatoFrequente('GUCCI SHOPPING','BANCO ITAU S.A.', '59.429.182/0001-01', '59429182000101')"><div class="icon-contato-lista"><span class="material-icons-outlined">storefront</span></div><div><p style="font-size:13px;font-weight:600;">59.429.182 Gucci Shopping</p></div></div>
+      <div class="row-contato-lista" onclick="selecionarContatoFrequente('ZARA SHOPPING','BANCO BRADESCO', '61.315.182/0001-02', '61315182000102')"><div class="icon-contato-lista"><span class="material-icons-outlined">storefront</span></div><div><p style="font-size:13px;font-weight:600;">61.315.182 Zara Shopping</p></div></div>
+      <div class="row-contato-lista" onclick="selecionarContatoFrequente('ALLAN ALMADA CUNHA','NUBANK', '***.075.768-**', 'allan.cunha@email.com')"><div class="icon-contato-lista">AA</div><div><p style="font-size:13px;font-weight:600;">Allan Almada Cunha</p></div></div>
+    </div>
+    <div style="padding:24px 20px 40px 20px;">
+      <button class="btn-bottom-purple" onclick="avancarParaValorComChave()">Continuar</button>
     </div>
   </div>
 
@@ -577,24 +582,26 @@
     <div style="padding:0 20px;">
       <p style="color:var(--nu-text-gray);font-size:13px;">Transferir para</p>
       <h3 style="font-size:17px;font-weight:700;margin-top:3px;" class="editavel-toque" id="txt-valor-destinatario" onclick="editarNomeDireto()">Fulano de Tal</h3>
+      <p style="color:var(--nu-text-gray);font-size:12px;margin-top:2px;" id="txt-valor-destinatario-chave">Chave: Pix</p>
       <p style="color:var(--nu-text-gray);font-size:13px;margin-top:32px;">Valor</p>
       <input type="text" id="input-dinheiro-fluxo" value="R$ 50,00" style="background:none;border:none;color:#fff;font-size:36px;font-weight:700;width:100%;outline:none;margin-top:6px;" oninput="mascaraMoeda(this)">
       <p style="color:var(--nu-text-gray);font-size:13px;margin-top:22px;">Pagando com</p>
       <div class="card-saldo-pagamento"><div style="width:34px;height:34px;background:#2c1f3d;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#b388ff;"><span class="material-icons-outlined" style="font-size:18px;">monetization_on</span></div><div><p style="font-size:14px;font-weight:700;color:#b388ff;">Saldo Nubank</p><p style="font-size:12px;color:var(--nu-text-gray)" id="txt-saldo-card-fluxo">Atual: R$ 23.546,65</p></div></div>
     </div>
-    <div style="position:fixed;bottom:22px;left:20px;right:20px;max-width:410px;margin:0 auto;"><button class="btn-bottom-purple" onclick="avancarParaRevisao()">Continuar com saldo</button></div>
+    <div style="padding:24px 20px 40px 20px;"><button class="btn-bottom-purple" onclick="avancarParaRevisao()">Continuar com saldo</button></div>
   </div>
 
   <!-- TELA REVISÃO -->
-  <div id="view-revisao-envio" class="view-tela">    <div style="padding:18px 20px;"><span class="material-icons-outlined" style="cursor:pointer;" onclick="navegarPara('view-inserir-valor')">arrow_back</span></div>
+  <div id="view-revisao-envio" class="view-tela">
+    <div style="padding:18px 20px;"><span class="material-icons-outlined" style="cursor:pointer;" onclick="navegarPara('view-inserir-valor')">arrow_back</span></div>
     <div style="padding:0 20px;">
       <h2 style="font-size:24px;font-weight:700;margin-bottom:24px;">Você vai enviar</h2>
       <div class="edit-step-container"><div><h1 style="font-size:24px;font-weight:700;" id="rev-txt-valor">R$ 50,00</h1><p style="font-size:12px;color:var(--nu-text-gray);">Saldo Nubank</p></div><span class="material-icons-outlined" style="color:var(--nu-text-gray);font-size:20px;">edit</span></div>
-      <div class="edit-step-container" style="margin-top:14px;"><div style="width:90%;"><p style="font-size:15px;font-weight:700;color:#b388ff;" class="editavel-toque" id="rev-txt-nome" onclick="editarNomeDireto()">Fulano de Tal</p><p style="font-size:12px;color:var(--nu-text-gray);margin-top:3px;" class="editavel-toque" id="rev-txt-banco" onclick="editarBancoDireto()">Banco</p></div><span class="material-icons-outlined" style="color:var(--nu-text-gray);font-size:20px;">edit</span></div>
+      <div class="edit-step-container" style="margin-top:14px;"><div style="width:90%;"><p style="font-size:15px;font-weight:700;color:#b388ff;" class="editavel-toque" id="rev-txt-nome" onclick="editarNomeDireto()">Fulano de Tal</p><p style="font-size:12px;color:var(--nu-text-gray);margin-top:3px;" class="editavel-toque" id="rev-txt-banco" onclick="editarBancoDireto()">Banco</p><p style="font-size:12px;color:var(--nu-text-gray);margin-top:2px;" id="rev-txt-chave">Chave: Pix</p></div><span class="material-icons-outlined" style="color:var(--nu-text-gray);font-size:20px;">edit</span></div>
       <div style="margin-top:18px;font-size:13px;display:flex;justify-content:space-between;color:var(--nu-text-gray);"><span>Quando</span><span style="color:#fff;font-weight:600;">Agora, sem repetir</span></div>
       <div style="margin-top:14px;font-size:13px;display:flex;justify-content:space-between;color:var(--nu-text-gray);"><span>Via</span><span style="color:#fff;font-weight:600;">Pix</span></div>
     </div>
-    <div style="position:fixed;bottom:22px;left:20px;right:20px;max-width:410px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
+    <div style="padding:24px 20px 40px 20px;display:flex;justify-content:space-between;align-items:center;">
       <div><p style="font-size:12px;color:var(--nu-text-gray);">Valor Total</p><p style="font-size:19px;font-weight:700;" id="rev-txt-valor-total">R$ 50,00</p></div>
       <button class="btn-bottom-purple" style="width:140px;" onclick="navegarPara('view-senha-4digitos')">Enviar</button>
     </div>
@@ -624,7 +631,7 @@
     </div>
   </div>
 
-  <!-- LOADING -->
+  <!-- LOADING / ANIMACAO DE TRANSFERENCIA (Na parte inferior) -->
   <div id="view-loading-nu-spa" class="view-tela-loading-nu">
     <div class="texto-loading-nu" id="lbl-loading-dinamico">Transferindo...</div>
     <div class="barra-progresso-container"><div class="barra-progresso-purple" id="barra-progresso-purple-id"></div></div>
@@ -635,7 +642,8 @@
     <div class="sucesso-close"><span class="material-icons-outlined" onclick="navegarPara('view-home')">close</span></div>
     <div class="sucesso-animacao">
       <div class="sucesso-trail"></div>
-      <div class="sucesso-coin"></div>      <div class="sucesso-coin"></div>
+      <div class="sucesso-coin"></div>
+      <div class="sucesso-coin"></div>
       <div class="sucesso-coin-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     </div>
     <div class="sucesso-title">Transferência concluída</div>
@@ -655,8 +663,9 @@
     <div class="comp-header-area">
       <div class="comp-top-row">
         <div class="comp-logo-area">
-          <span class="comp-logo-nu">nu</span>
-          <span class="comp-logo-check">✓</span>
+          <div class="comp-logo-nu">
+            <img src="./nu-logo.png" alt="Nu">
+          </div>
         </div>
         <div class="comp-actions" id="comp-actions">
           <button class="comp-btn comp-btn-share" onclick="compartilharComprovanteImagem()" title="Compartilhar como imagem">
@@ -668,26 +677,27 @@
         </div>
       </div>
       <div class="comp-main-title">Comprovante de<br>transferência</div>
-      <div class="comp-timestamp" id="c-real-data-hora">10 MAI 2026 - 17:50:06</div>
+      <div class="comp-timestamp" id="c-real-data-hora">14 SET 2026 - 12:03:55</div>
     </div>
-    <div class="comp-item-row"><div class="comp-item-label">Valor</div><div class="comp-item-value valor-destaque" id="c-real-valor">R$ 3,00</div></div>
+    <div class="comp-item-row"><div class="comp-item-label">Valor</div><div class="comp-item-value valor-destaque" id="c-real-valor">R$ 15,00</div></div>
     <div class="comp-item-row"><div class="comp-item-label">Tipo de transferência</div><div class="comp-item-value">Pix</div></div>
-    <div class="comp-item-row"><div class="comp-item-label">ID da transação</div><div class="comp-item-value" id="c-real-id-top" style="font-size:12px;line-height:1.5;">E18236120202605102049s14d1b0659d</div></div>
+    <div class="comp-item-row"><div class="comp-item-label">ID da transação</div><div class="comp-item-value" id="c-real-id-top" style="font-size:12px;line-height:1.5;">E18236120202609141503s194dca9132</div></div>
     <div class="comp-section-divider"></div>
     <div class="comp-section-title">Destino</div>
     <div class="comp-item-row"><div class="comp-item-label">Nome</div><div class="comp-item-value" id="c-real-dest-nome" style="color:#000;font-weight:600;">GABRIELLY CRISTINY CAMARGO BASTOS</div></div>
-    <div class="comp-item-row"><div class="comp-item-label">CPF</div><div class="comp-item-value">***.334.497-**</div></div>
+    <div class="comp-item-row"><div class="comp-item-label">CPF</div><div class="comp-item-value editavel-toque" id="c-real-dest-cpf" onclick="editarCpfDestinatarioComp()">***.334.497-**</div></div>
     <div class="comp-item-row"><div class="comp-item-label">Instituição</div><div class="comp-item-value" id="c-real-dest-banco">CAIXA ECONOMICA FEDERAL</div></div>
     <div class="comp-item-row"><div class="comp-item-label">Chave Pix</div><div class="comp-item-value" id="c-real-dest-chave">+5521987052110</div></div>
     <div class="comp-section-divider"></div>
     <div class="comp-section-title">Origem</div>
-    <div class="comp-item-row"><div class="comp-item-label">Nome</div><div class="comp-item-value" id="c-real-ori-nome">Douglas Henrique Ximenes Rocha</div></div>
+    <div class="comp-item-row"><div class="comp-item-label">Nome</div><div class="comp-item-value" id="c-real-ori-nome">Bryan Lyncon da Silva Pereira</div></div>
     <div class="comp-item-row"><div class="comp-item-label">Instituição</div><div class="comp-item-value">NU PAGAMENTOS - IP</div></div>
-    <div class="comp-item-row"><div class="comp-item-label">CPF</div><div class="comp-item-value" id="c-real-ori-cpf">***.075.768-**</div></div>
-    <div class="comp-gray-footer">      <div style="font-weight:700;margin-bottom:2px;">Nu Pagamentos S.A. - Instituição de Pagamento</div>
+    <div class="comp-item-row"><div class="comp-item-label">CPF</div><div class="comp-item-value editavel-toque" id="c-real-ori-cpf" onclick="editarCpfOrigemComp()">***.428.467-**</div></div>
+    <div class="comp-gray-footer">
+      <div style="font-weight:700;margin-bottom:2px;">Nu Pagamentos S.A. - Instituição de Pagamento</div>
       <div style="font-weight:700;margin-bottom:12px;">CNPJ 18.236.120/0001-58</div>
       <div>ID da transação:</div>
-      <div class="comp-footer-id" id="c-real-id-bottom">E18236120202605102049s14d1b0659d</div>
+      <div class="comp-footer-id" id="c-real-id-bottom">E18236120202609141503s194dca9132</div>
       <div style="color:#666;font-weight:500;">Estamos aqui para ajudar se você tiver alguma dúvida.</div>
       <a href="#" class="comp-link-ajuda">Me ajuda <span class="material-icons-outlined" style="font-size:14px;margin-left:4px;font-weight:bold;">arrow_forward</span></a>
       <div class="comp-ouvidoria">Ouvidoria: 0800 887 0463 ou demais canais em nubank.com.br/contatos#ouvidoria (Atendimento das 8h às 18h em dias úteis).</div>
@@ -704,7 +714,7 @@
     <div class="notif-faker-container">
       <div class="notif-preview-card">
         <div class="notif-preview-icon">
-          <svg viewBox="0 0 100 100"><text x="50" y="72" text-anchor="middle" font-size="70" font-weight="bold" fill="white" font-family="Arial">nu</text></svg>
+          <img src="./nu-logo.png" alt="Nu">
         </div>
         <div class="notif-preview-text">
           <h4>Transferencia recebida</h4>
@@ -733,7 +743,8 @@
         </div>
       </div>
       
-      <button class="notif-faker-btn" onclick="gerarNotificacoes()">        Gerar Notificações
+      <button class="notif-faker-btn" onclick="gerarNotificacoes()">
+        Gerar Notificações
         <span class="material-icons-outlined">send</span>
       </button>
       
@@ -755,56 +766,25 @@
     </div>
   </nav>
 
-  <!-- Botão instalar PWA -->
-  <div id="btn-instalar-pwa" style="display:none;position:fixed;bottom:90px;right:16px;z-index:9998;background:#820ad1;color:#fff;border:none;border-radius:50px;padding:12px 18px;font-size:13px;font-weight:700;cursor:pointer;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(130,10,209,0.5);" onclick="instalarPWA()">
-    <span class="material-icons-outlined" style="font-size:18px;">install_mobile</span>
-    Instalar app
-  </div>
-
   <script>
-    // Variáveis globais
     let saldoEscondido = false;
-    let nomeDestinatarioGlobal = "Fulano de Tal";
-    let bancoDestinatarioGlobal = "Banco";
+    let nomeDestinatarioGlobal = "GABRIELLY CRISTINY CAMARGO BASTOS";
+    let bancoDestinatarioGlobal = "CAIXA ECONOMICA FEDERAL";
+    let cpfDestinatarioGlobal = "***.334.497-**";
+    let chavePixGlobal = "+5521987052110";
+    let cpfOrigemGlobal = "***.428.467-**";
     let senhaDigitada = "";
     let profilePhotoData = null;
     let intervaloNotif = null;
     let contadorNotif = 0;
-    let pixCopiaCola = "";
     let html5QrCode = null;
     let notificacoesRecebidas = 0;
     let notifPermissaoConcedida = false;
-    let _deferredInstall = null;
-    let _modalSaldoTarget = null;
 
-    // Ícone para notificações (arquivo local)
-    const NOTIF_ICON = './icon-192.png';
-
-    // Inicialização
     document.addEventListener('DOMContentLoaded', function() {
-      carregarConfig();      configurarEventos();
+      carregarConfig();
+      configurarEventos();
       solicitarPermissaoNotificacao();
-      tornarSaldoEditavel('nu-saldo-main', 'Saldo em Conta');
-      tornarSaldoEditavel('nu-saldo-tela2', 'Saldo em Conta');
-      tornarSaldoEditavel('nu-fatura', 'Fatura do cartão');
-      tornarSaldoEditavel('nu-limite', 'Limite disponível');
-      tornarSaldoEditavel('nu-emprestimo', 'Empréstimo');
-      tornarSaldoEditavel('nu-saldo-separado', 'Saldo Separado');
-      
-      document.querySelectorAll('.main-balance-value, .section-value').forEach(function(el, i){
-        if(!el.id){ el.id = 'auto-saldo-' + i; }
-        var saved = localStorage.getItem('nu_saldo_' + el.id);
-        if(saved) el.textContent = saved;
-        if(!el._editavelOk){
-          el._editavelOk = true;
-          el.style.cursor = 'pointer';
-          el.addEventListener('click', function(e){
-            if(el.classList.contains('embaçado')) return;
-            e.stopPropagation();
-            abrirModalSaldo(el, 'Editar valor');
-          });
-        }
-      });
     });
 
     function configurarEventos() {
@@ -814,87 +794,14 @@
       });
     }
 
-    // =============================================
-    // SISTEMA DE NOTIFICAÇÕES
-    // =============================================
-    
     function solicitarPermissaoNotificacao() {
-      if ('Notification' in window) {
-        if (Notification.permission === 'default') {
-          Notification.requestPermission().then(function(permission) {
-            if (permission === 'granted') {
-              notifPermissaoConcedida = true;
-              console.log('Notificações ativadas!');
-            }
-          });
-        } else if (Notification.permission === 'granted') {
-          notifPermissaoConcedida = true;
-        }
+      if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission().then(function(permission) {
+          if (permission === 'granted') notifPermissaoConcedida = true;
+        });
+      } else if ('Notification' in window && Notification.permission === 'granted') {
+        notifPermissaoConcedida = true;
       }
-    }
-    function enviarNotificacaoNativa(valor, remetente) {
-      if (notifPermissaoConcedida && 'Notification' in window) {
-        try {
-          const notification = new Notification('Transferência recebida', {
-            body: 'Você recebeu R$ ' + valor + ' de ' + remetente,
-            icon: NOTIF_ICON,
-            badge: NOTIF_ICON,
-            tag: 'nubank-pix-' + Date.now(),
-            requireInteraction: false,
-            vibrate: [100, 50, 100],
-            silent: false
-          });
-          setTimeout(() => { notification.close(); }, 5000);
-          notification.onclick = function() {
-            window.focus();
-            notification.close();
-          };
-        } catch(e) {
-          console.log('Erro ao enviar notificação:', e);
-        }
-      }
-      if (navigator.vibrate) {
-        try { navigator.vibrate([100, 50, 100]); } catch(e) {}
-      }
-      notificacoesRecebidas++;
-      atualizarBadgeNotificacao();
-    }
-
-    function atualizarBadgeNotificacao() {
-      const badge = document.getElementById('header-notif-badge');
-      if (badge) {
-        if (notificacoesRecebidas > 0) {
-          badge.textContent = notificacoesRecebidas > 9 ? '9+' : notificacoesRecebidas;
-          badge.style.display = 'flex';
-        } else {
-          badge.style.display = 'none';
-        }
-      }
-    }
-
-    function mostrarNotificacaoToast(nomeRemetente, valor) {
-      const toast = document.getElementById('notification-toast');
-      if (!toast) return;
-      document.getElementById('notif-nome-txt').textContent = nomeRemetente;
-      document.getElementById('notif-valor-txt').textContent = valor;
-      document.getElementById('notif-texto').innerHTML = 'Você recebeu R$ <span>' + valor + '</span> de <span>' + nomeRemetente + '</span>';
-      toast.classList.add('show');
-      enviarNotificacaoNativa(valor, nomeRemetente);
-      setTimeout(() => toast.classList.remove('show'), 4000);    }
-
-    function simularRecebimentoPix() {
-      const nome = document.getElementById('notif-input-remetente').value || 'Fulano de Tal';
-      const valor = document.getElementById('notif-input-valor').value || '3,00';
-      let saldoAtual = parseFloat(document.getElementById('nu-saldo-main').getAttribute('data-valor')) || 0;
-      let valorNum = parseFloat(valor.replace(',', '.')) || 0;
-      let novoSaldo = saldoAtual + valorNum;
-      
-      document.getElementById('nu-saldo-main').setAttribute('data-valor', novoSaldo.toFixed(2));
-      document.getElementById('nu-saldo-main').textContent = novoSaldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      document.getElementById('nu-saldo-tela2').setAttribute('data-valor', novoSaldo.toFixed(2));
-      document.getElementById('nu-saldo-tela2').textContent = novoSaldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      
-      mostrarNotificacaoToast(nome, valor);
     }
 
     function abrirTelaNotificacoes() { 
@@ -905,7 +812,6 @@
     function fecharTelaNotificacoes() {
       document.getElementById('tela-notificacoes').classList.remove('ativa');
       notificacoesRecebidas = 0;
-      atualizarBadgeNotificacao();
       if (intervaloNotif) { clearInterval(intervaloNotif); intervaloNotif = null; }
     }
 
@@ -925,11 +831,11 @@
       contadorNotif = 0;
       const statusEl = document.getElementById('notif-status');
       statusEl.textContent = 'Gerando notificações...';
-      statusEl.className = 'notif-status';
       
       function enviarUma() {
         if (contadorNotif >= qtd) {
-          statusEl.textContent = '✅ ' + qtd + ' notificações enviadas!';          statusEl.className = 'notif-status success';
+          statusEl.textContent = '✅ ' + qtd + ' notificações enviadas!';
+          statusEl.className = 'notif-status success';
           clearInterval(intervaloNotif);
           intervaloNotif = null;
           return;
@@ -945,71 +851,84 @@
       }
     }
 
-    // SCANNER QR CODE
+    function mostrarNotificacaoToast(nomeRemetente, valor) {
+      const toast = document.getElementById('notification-toast');
+      if (!toast) return;
+      document.getElementById('notif-nome-txt').textContent = nomeRemetente;
+      document.getElementById('notif-valor-txt').textContent = valor;
+      document.getElementById('notif-texto').innerHTML = 'Você recebeu R$ <span>' + valor + '</span> de <span>' + nomeRemetente + '</span>';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
     async function iniciarScanner() {
       if (typeof Html5Qrcode === 'undefined') return;
       html5QrCode = new Html5Qrcode("reader");
       try {
         const cameras = await Html5Qrcode.getCameras();
-        if (!cameras || cameras.length === 0) {
-          alert("Nenhuma câmera encontrada.");
-          return;
-        }
+        if (!cameras || cameras.length === 0) return;
         let cameraId = cameras[0].id;
         for (const cam of cameras) {
           const label = cam.label.toLowerCase();
-          if (label.includes('back') || label.includes('rear') || label.includes('traseira') || label.includes('environment')) {
+          if (label.includes('back') || label.includes('rear') || label.includes('traseira')) {
             cameraId = cam.id;
             break;
           }
         }
-        if (cameras.length > 1 && cameraId === cameras[0].id) {
-          cameraId = cameras[cameras.length - 1].id;
-        }
-        await html5QrCode.start(
-          cameraId,
-          { fps: 10, qrbox: { width: 250, height: 250 } },
-          (decodedText) => {
-            pararScanner();
-            processarQRCodePix(decodedText);
-          },
-          () => {}
-        );
-      } catch(err) {
-        alert("Erro ao acessar câmera: " + err.message);
-      }
+        await html5QrCode.start(cameraId, { fps: 10, qrbox: { width: 250, height: 250 } }, (text) => {
+          pararScanner();
+          chavePixGlobal = text;
+          navegarPara('view-inserir-valor');
+        }, () => {});
+      } catch(err) {}
     }
+    
     function pararScanner() {
       if (html5QrCode) {
         html5QrCode.stop().then(() => { html5QrCode.clear(); }).catch(() => {});
       }
     }
 
-    function processarQRCodePix(payload) {
-      if (payload.includes('000201') || payload.includes('BR.GOV.BCB.PIX')) {
-        const valorMatch = payload.match(/54(\d{2,})([\d,]+)/);
-        let valor = '0,00';
-        if (valorMatch) valor = valorMatch[2];
-        alert(`QR Code Pix detectado!\n\nValor: R$ ${valor}\n\nRedirecionando para pagamento...`);
-        navegarPara('view-home');
-      } else {
-        alert('QR Code detectado:\n\n' + payload);
-      }
+    function atualizarChavePixDigitada(el) {
+      chavePixGlobal = el.value;
     }
 
-    // Compartilhar comprovante como IMAGEM
+    function avancarParaValorComChave() {
+      let inputVal = document.getElementById('input-chave-pix-input').value.trim();
+      if (inputVal !== "") {
+        chavePixGlobal = inputVal;
+        nomeDestinatarioGlobal = inputVal;
+        bancoDestinatarioGlobal = "Instituição Parceira";
+      }
+      document.getElementById('txt-valor-destinatario').textContent = nomeDestinatarioGlobal;
+      document.getElementById('txt-valor-destinatario-chave').textContent = "Chave: " + chavePixGlobal;
+      navegarPara('view-inserir-valor');
+    }
+
+    function selecionarContatoFrequente(nome, banco, cpf, chave) {
+      nomeDestinatarioGlobal = nome;
+      bancoDestinatarioGlobal = banco;
+      if(cpf) cpfDestinatarioGlobal = cpf;
+      if(chave) chavePixGlobal = chave;
+      document.getElementById('txt-valor-destinatario').textContent = nomeDestinatarioGlobal;
+      document.getElementById('txt-valor-destinatario-chave').textContent = "Chave: " + chavePixGlobal;
+      navegarPara('view-inserir-valor');
+    }
+
+    function avancarParaRevisao() {
+      let valorStr = document.getElementById('input-dinheiro-fluxo').value;
+      document.getElementById('rev-txt-valor').textContent = valorStr;
+      document.getElementById('rev-txt-valor-total').textContent = valorStr;
+      document.getElementById('rev-txt-nome').textContent = nomeDestinatarioGlobal;
+      document.getElementById('rev-txt-banco').textContent = bancoDestinatarioGlobal;
+      document.getElementById('rev-txt-chave').textContent = "Chave: " + chavePixGlobal;
+      navegarPara('view-revisao-envio');
+    }
+
     function compartilharComprovanteImagem() {
       const compEl = document.getElementById('view-comprovante-final');
       const actionsEl = document.getElementById('comp-actions');
       if (actionsEl) actionsEl.classList.add('esconder');
-      const btn = document.querySelector('.comp-btn-share');
-      if (btn) { btn.style.background = '#4ade80'; setTimeout(() => { btn.style.background = ''; }, 500); }
-      
-      if (typeof html2canvas === 'undefined') {
-        alert('Biblioteca html2canvas não carregada');
-        if (actionsEl) actionsEl.classList.remove('esconder');
-        return;
-      }
       
       html2canvas(compEl, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff' }).then(canvas => {
         if (actionsEl) actionsEl.classList.remove('esconder');
@@ -1021,15 +940,13 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a'); a.href = url; a.download = 'comprovante-nubank.png';
             document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-            alert('✅ Imagem salva!');
           }
         }, 'image/png');
       }).catch(() => {
         if (actionsEl) actionsEl.classList.remove('esconder');
-        alert('Erro ao gerar imagem.');
-      });    }
+      });
+    }
 
-    // Edição de campos
     function editarNomeHome() {
       let nomeCfg = document.getElementById('cfg-nome-completo').value || 'Seu Nome';
       let novo = prompt("Seu nome:", nomeCfg);
@@ -1039,11 +956,29 @@
         salvarConfig(); 
       }
     }
+
+    function editarCpfDestinatarioComp() {
+      let novo = prompt("Editar CPF do Destinatário:", cpfDestinatarioGlobal);
+      if (novo !== null && novo !== "") {
+        cpfDestinatarioGlobal = novo;
+        document.getElementById('c-real-dest-cpf').textContent = novo;
+      }
+    }
+
+    function editarCpfOrigemComp() {
+      let novo = prompt("Editar CPF de Origem:", cpfOrigemGlobal);
+      if (novo !== null && novo !== "") {
+        cpfOrigemGlobal = novo;
+        document.getElementById('c-real-ori-cpf').textContent = novo;
+        document.getElementById('cfg-cpf-origem').value = novo;
+      }
+    }
+
     function editarSaldoHome() {
       let atual = document.getElementById('nu-saldo-main').getAttribute('data-valor');
       let novo = prompt("Novo saldo:", atual);
       if (novo !== null && novo !== "") {
-        let val = parseFloat(novo);
+        let val = parseFloat(novo.replace(',', '.'));
         if (!isNaN(val)) {
           document.getElementById('nu-saldo-main').setAttribute('data-valor', val.toFixed(2));
           document.getElementById('nu-saldo-tela2').setAttribute('data-valor', val.toFixed(2));
@@ -1055,362 +990,289 @@
         }
       }
     }
+
     function editarSaldoSeparado() {
       let atual = document.getElementById('nu-saldo-separado').getAttribute('data-valor');
       let novo = prompt("Saldo separado:", atual);
       if (novo !== null && novo !== "") { 
-        let val = parseFloat(novo); 
+        let val = parseFloat(novo.replace(',', '.')); 
         if (!isNaN(val)) { 
           document.getElementById('nu-saldo-separado').setAttribute('data-valor', val.toFixed(2)); 
           document.getElementById('nu-saldo-separado').textContent = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); 
         } 
       }
     }
+
     function editarFatura() {
       let atual = document.getElementById('nu-fatura').getAttribute('data-valor');
       let novo = prompt("Fatura:", atual);
       if (novo !== null && novo !== "") { 
-        let val = parseFloat(novo); 
+        let val = parseFloat(novo.replace(',', '.')); 
         if (!isNaN(val)) { 
           document.getElementById('nu-fatura').setAttribute('data-valor', val.toFixed(2)); 
           document.getElementById('nu-fatura').textContent = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); 
         } 
       }
-    }    function editarLimite() {
+    }
+
+    function editarLimite() {
       let atual = document.getElementById('nu-limite').getAttribute('data-valor');
       let novo = prompt("Limite:", atual);
       if (novo !== null && novo !== "") { 
-        let val = parseFloat(novo); 
+        let val = parseFloat(novo.replace(',', '.')); 
         if (!isNaN(val)) { 
           document.getElementById('nu-limite').setAttribute('data-valor', val.toFixed(2)); 
           document.getElementById('nu-limite').textContent = "Limite disponível: " + val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); 
         } 
       }
     }
+
     function editarEmprestimo() {
       let atual = document.getElementById('nu-emprestimo').getAttribute('data-valor');
       let novo = prompt("Disponível:", atual);
       if (novo !== null && novo !== "") { 
-        let val = parseFloat(novo); 
+        let val = parseFloat(novo.replace(',', '.')); 
         if (!isNaN(val)) { 
           document.getElementById('nu-emprestimo').setAttribute('data-valor', val.toFixed(2)); 
           document.getElementById('nu-emprestimo').textContent = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); 
         } 
       }
     }
+
     function editarItemHistorico(el) {
-      let nome = prompt("Nome:", el.querySelector('.historico-nome').textContent); 
-      if (nome !== null) el.querySelector('.historico-nome').textContent = nome;
-      let valor = prompt("Valor:", el.querySelector('.historico-valor').textContent.replace('R$ ', '')); 
-      if (valor !== null) el.querySelector('.historico-valor').textContent = 'R$ ' + valor;
-      let data = prompt("Data:", el.querySelector('.historico-data').textContent); 
-      if (data !== null) el.querySelector('.historico-data').textContent = data;
+      let nome = prompt("Nome:", el.querySelector('.historico-nome').textContent);
+      if(nome !== null) el.querySelector('.historico-nome').textContent = nome;
+      let valor = prompt("Valor:", el.querySelector('.historico-valor').textContent);
+      if(valor !== null) el.querySelector('.historico-valor').textContent = valor;
     }
+
     function adicionarExtrato() {
-      let tipo = prompt("Tipo (1=enviada, 2=recebida):", "1"); if (tipo === null) return;
-      let nome = prompt("Nome:", "Novo"); if (nome === null) return;
-      let valor = prompt("Valor:", "100,00"); if (valor === null) return;
-      let data = prompt("Data:", "Hoje"); if (data === null) return;
-      const item = document.createElement('div'); item.className = 'historico-item'; item.setAttribute('onclick', 'editarItemHistorico(this)');
-      let isEnviada = tipo === '1';
-      item.innerHTML = `<div class="historico-icon ${isEnviada ? 'enviada' : 'recebida'}"><span class="material-icons-outlined" style="color:${isEnviada ? '#fff' : '#248738'};font-size:18px;">${isEnviada ? 'north_east' : 'south_east'}</span></div><div class="historico-info"><div class="historico-titulo">Transferência ${isEnviada ? 'enviada' : 'recebida'}</div><div class="historico-nome">${nome}</div><div class="historico-valor">R$ ${valor}</div><div class="historico-tipo">Pix</div></div><div class="historico-data">${data}</div>`;
-      document.getElementById('historico-lista').appendChild(item);
+      let nome = prompt("Nome do recebedor/pagador:", "Novo Lançamento");
+      if(!nome) return;
+      let valor = prompt("Valor (ex: R$ 100,00):", "R$ 50,00");
+      if(!valor) return;
+      let tipo = prompt("Tipo (Enviada ou Recebida):", "Enviada");
+      let lista = document.getElementById('historico-lista');
+      let div = document.createElement('div');
+      div.className = 'historico-item';
+      div.setAttribute('onclick', 'editarItemHistorico(this)');
+      let isEnv = tipo.toLowerCase().includes('env');
+      div.innerHTML = '<div class="historico-icon ' + (isEnv ? 'enviada' : 'recebida') + '"><span class="material-icons-outlined" style="color:' + (isEnv ? '#fff' : '#248738') + ';font-size:18px;">' + (isEnv ? 'north_east' : 'south_east') + '</span></div><div class="historico-info"><div class="historico-titulo">Transferência ' + (isEnv ? 'enviada' : 'recebida') + '</div><div class="historico-nome">' + nome + '</div><div class="historico-valor">' + valor + '</div><div class="historico-tipo">Pix</div></div><div class="historico-data">Hoje</div>';
+      lista.insertBefore(div, lista.firstChild);
     }
-    function uploadFoto(event) {
-      const file = event.target.files[0];
-      if (file) { 
-        const reader = new FileReader(); 
-        reader.onload = function(e) { 
-          profilePhotoData = e.target.result; 
-          document.getElementById('profile-photo-preview').src = profilePhotoData; 
-          document.getElementById('profile-photo-preview').style.display = 'block'; 
-          document.getElementById('photo-placeholder').style.display = 'none'; 
-          document.getElementById('header-profile-photo').src = profilePhotoData;           document.getElementById('header-profile-photo').style.display = 'block'; 
-          document.getElementById('header-profile-icon').style.display = 'none'; 
-          salvarConfig(); 
-        }; 
-        reader.readAsDataURL(file); 
+
+    function editarNomeDireto() {
+      let novo = prompt("Nome do destinatário:", nomeDestinatarioGlobal);
+      if(novo) {
+        nomeDestinatarioGlobal = novo;
+        document.getElementById('txt-valor-destinatario').textContent = novo;
+        document.getElementById('rev-txt-nome').textContent = novo;
       }
     }
 
-    // Configurações
-    function abrirConfigCompleta() { carregarConfig(); document.getElementById('tela-config-completa').classList.add('ativa'); }
-    function fecharConfigCompleta() { document.getElementById('tela-config-completa').classList.remove('ativa'); }
-    function salvarConfiguracoesCompleta() {
-      salvarConfig();
-      let nomeCfg = document.getElementById('cfg-nome-completo').value;
-      if (nomeCfg) { document.getElementById('nu-username').textContent = "Olá, " + nomeCfg.split(' ')[0]; document.getElementById('c-real-ori-nome').textContent = nomeCfg; }
-      let destNome = document.getElementById('cfg-dest-nome').value; if (destNome) { document.getElementById('c-real-dest-nome').textContent = destNome; nomeDestinatarioGlobal = destNome; }
-      let destBanco = document.getElementById('cfg-dest-banco').value; if (destBanco) { document.getElementById('c-real-dest-banco').textContent = destBanco; bancoDestinatarioGlobal = destBanco; }
-      let destChave = document.getElementById('cfg-dest-chave').value; if (destChave) document.getElementById('c-real-dest-chave').textContent = destChave;
-      let cpfOrigem = document.getElementById('cfg-cpf-origem').value; if (cpfOrigem) document.getElementById('c-real-ori-cpf').textContent = cpfOrigem;
-      alert('Salvo!'); fecharConfigCompleta();
-    }
-    function salvarConfig() { 
-      try { 
-        localStorage.setItem('nubank_config', JSON.stringify({ 
-          nome: document.getElementById('cfg-nome-completo').value, 
-          cpfOrigem: document.getElementById('cfg-cpf-origem').value, 
-          destNome: document.getElementById('cfg-dest-nome').value, 
-          destCpf: document.getElementById('cfg-dest-cpf').value, 
-          destBanco: document.getElementById('cfg-dest-banco').value, 
-          destChave: document.getElementById('cfg-dest-chave').value, 
-          saldo: document.getElementById('nu-saldo-main').getAttribute('data-valor'), 
-          profilePhoto: profilePhotoData 
-        })); 
-      } catch(e) {} 
-    }
-    function carregarConfig() {
-      try {
-        const saved = localStorage.getItem('nubank_config');
-        if (saved) {
-          const c = JSON.parse(saved);
-          if (c.nome) { document.getElementById('cfg-nome-completo').value = c.nome; document.getElementById('nu-username').textContent = "Olá, " + c.nome.split(' ')[0]; }
-          if (c.cpfOrigem) document.getElementById('cfg-cpf-origem').value = c.cpfOrigem;
-          if (c.destNome) { document.getElementById('cfg-dest-nome').value = c.destNome; nomeDestinatarioGlobal = c.destNome; }
-          if (c.destCpf) document.getElementById('cfg-dest-cpf').value = c.destCpf;
-          if (c.destBanco) { document.getElementById('cfg-dest-banco').value = c.destBanco; bancoDestinatarioGlobal = c.destBanco; }
-          if (c.destChave) document.getElementById('cfg-dest-chave').value = c.destChave;
-          if (c.saldo) {
-            document.getElementById('nu-saldo-main').setAttribute('data-valor', c.saldo); 
-            document.getElementById('nu-saldo-tela2').setAttribute('data-valor', c.saldo);
-            if (!saldoEscondido) {               let v = parseFloat(c.saldo); 
-              if (!isNaN(v)) { 
-                document.getElementById('nu-saldo-main').textContent = v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); 
-                document.getElementById('nu-saldo-tela2').textContent = v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); 
-              } 
-            }
-          }
-          if (c.profilePhoto) { 
-            profilePhotoData = c.profilePhoto; 
-            document.getElementById('profile-photo-preview').src = profilePhotoData; 
-            document.getElementById('profile-photo-preview').style.display = 'block'; 
-            document.getElementById('photo-placeholder').style.display = 'none'; 
-            document.getElementById('header-profile-photo').src = profilePhotoData; 
-            document.getElementById('header-profile-photo').style.display = 'block'; 
-            document.getElementById('header-profile-icon').style.display = 'none'; 
-          }
-        }
-      } catch(e) {}
+    function editarBancoDireto() {
+      let novo = prompt("Nome do banco:", bancoDestinatarioGlobal);
+      if(novo) {
+        bancoDestinatarioGlobal = novo;
+        document.getElementById('rev-txt-banco').textContent = novo;
+      }
     }
 
-    // Navegação
-    function navegarPara(id) {
-      document.querySelectorAll('.view-tela').forEach(t => t.classList.remove('ativa'));
-      document.querySelectorAll('.view-tela-loading-nu').forEach(t => t.classList.remove('ativa'));
-      const el = document.getElementById(id);
-      if (el) el.classList.add('ativa');
-      if (id === 'view-scanner-qr') setTimeout(() => iniciarScanner(), 300); else pararScanner();
-      const nav = document.getElementById('bottom-nav');
-      if (id === 'view-home' || id === 'view-saldo') { 
-        document.body.style.background = "#000"; 
-        if (nav) nav.style.display = 'flex'; 
-      } else { 
-        if (nav) nav.style.display = 'none'; 
-        document.body.style.background = (id === 'view-comprovante-final') ? "#fff" : "#000"; 
+    function navegarPara(idView) {
+      document.querySelectorAll('.view-tela').forEach(el => el.classList.remove('ativa'));
+      const alvo = document.getElementById(idView);
+      if(alvo) alvo.classList.add('ativa');
+      
+      const bottomNav = document.getElementById('bottom-nav');
+      if (bottomNav) {
+        bottomNav.style.display = (idView === 'view-home') ? 'flex' : 'none';
       }
+
       window.scrollTo(0, 0);
+      if(idView === 'view-scanner-qr') {
+        iniciarScanner();
+      } else {
+        pararScanner();
+      }
     }
 
-    // SALDO EMBAÇADO
     function toggleSaldoOculto() {
       saldoEscondido = !saldoEscondido;
-      const valEl = document.getElementById('nu-saldo-main');
-      const valEl2 = document.getElementById('nu-saldo-tela2');
-      const olho = document.getElementById('nu-olho');
-      if (saldoEscondido) {
-        valEl.classList.add('embaçado'); valEl2.classList.add('embaçado');
-        olho.textContent = 'visibility_off';
-      } else {
-        valEl.classList.remove('embaçado'); valEl2.classList.remove('embaçado');
-        let n = parseFloat(valEl.getAttribute('data-valor'));        if (!isNaN(n)) { 
-          valEl.textContent = n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); 
-          valEl2.textContent = n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); 
-        }
-        olho.textContent = 'visibility';
-      }
-    }
-
-    function editarNomeDireto() { let novo = prompt("Nome:", nomeDestinatarioGlobal); if (novo !== null && novo !== "") { nomeDestinatarioGlobal = novo.toUpperCase(); atualizarCampos(); } }
-    function editarBancoDireto() { let novo = prompt("Banco:", bancoDestinatarioGlobal); if (novo !== null && novo !== "") { bancoDestinatarioGlobal = novo.toUpperCase(); atualizarCampos(); } }
-    function atualizarCampos() { document.getElementById('txt-valor-destinatario').textContent = nomeDestinatarioGlobal; document.getElementById('rev-txt-nome').textContent = nomeDestinatarioGlobal; document.getElementById('rev-txt-banco').textContent = bancoDestinatarioGlobal; document.getElementById('suc-novo-nome').textContent = nomeDestinatarioGlobal; }
-    function selecionarContatoFrequente(nome, banco) { nomeDestinatarioGlobal = nome; bancoDestinatarioGlobal = banco; atualizarCampos(); navegarPara('view-inserir-valor'); }
-    function avancarParaValor() { atualizarCampos(); navegarPara('view-inserir-valor'); }
-    function mascaraMoeda(i) { let v = i.value.replace(/\D/g, ''); v = (v / 100).toFixed(2) + ''; v = v.replace(".", ","); v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'); i.value = "R$ " + v; }
-    function avancarParaRevisao() { const vStr = document.getElementById('input-dinheiro-fluxo').value; document.getElementById('rev-txt-valor').textContent = vStr; document.getElementById('rev-txt-valor-total').textContent = vStr; navegarPara('view-revisao-envio'); }
-
-    // Senha
-    function pressionarSenhaNu(num) { if (senhaDigitada.length < 4) { senhaDigitada += num; document.getElementById('dot-' + senhaDigitada.length).classList.add('preenchido'); } if (senhaDigitada.length === 4) setTimeout(() => executarCarregamento(), 300); }
-    function limparSenhaNu() { if (senhaDigitada.length > 0) { document.getElementById('dot-' + senhaDigitada.length).classList.remove('preenchido'); senhaDigitada = senhaDigitada.slice(0, -1); } }
-    function executarCarregamento() {
-      navegarPara('view-loading-nu-spa');
-      const lbl = document.getElementById('lbl-loading-dinamico'); const prog = document.getElementById('barra-progresso-purple-id');
-      lbl.textContent = "Transferindo..."; prog.style.transition = "width 1.2s linear"; prog.style.width = "35%";
-      setTimeout(() => { lbl.textContent = "Gerando comprovante..."; prog.style.transition = "width 1.2s linear"; prog.style.width = "75%"; }, 1400);
-      setTimeout(() => { lbl.textContent = "Pronto!"; prog.style.transition = "width 0.6s linear"; prog.style.width = "100%"; }, 2800);
-      setTimeout(() => { document.getElementById('suc-novo-valor').textContent = document.getElementById('input-dinheiro-fluxo').value; document.getElementById('suc-novo-nome').textContent = nomeDestinatarioGlobal; senhaDigitada = ""; document.querySelectorAll('.dot-senha').forEach(d => d.classList.remove('preenchido')); navegarPara('view-sucesso-novo'); }, 3600);
-    }
-    function gerarEIrParaComprovante() {
-      const vStr = document.getElementById('input-dinheiro-fluxo').value || document.getElementById('suc-novo-valor').textContent;
-      let agora = new Date(); let meses = ["JAN","FEV","MAR","ABR","MAI","JUN","JUL","AGO","SET","OUT","NOV","DEZ"];
-      let dataFormatada = agora.getDate() + " " + meses[agora.getMonth()] + " 2026 - " + String(agora.getHours()).padStart(2,'0') + ":" + String(agora.getMinutes()).padStart(2,'0') + ":" + String(agora.getSeconds()).padStart(2,'0');
-      let idAleatorio = "E18236120202605" + Math.floor(1000 + Math.random()*9000) + "s14d1b" + Math.floor(10000 + Math.random()*90000) + "d";
-      document.getElementById('c-real-data-hora').textContent = dataFormatada; document.getElementById('c-real-valor').textContent = vStr;
-      document.getElementById('c-real-id-top').textContent = idAleatorio; document.getElementById('c-real-id-bottom').textContent = idAleatorio;
-      document.getElementById('c-real-dest-nome').textContent = nomeDestinatarioGlobal; document.getElementById('c-real-dest-banco').textContent = bancoDestinatarioGlobal;
-      document.getElementById('c-real-dest-chave').textContent = document.getElementById('cfg-dest-chave').value || '';
-      document.getElementById('c-real-ori-nome').textContent = document.getElementById('cfg-nome-completo').value || 'Seu Nome';
-      document.getElementById('c-real-ori-cpf').textContent = document.getElementById('cfg-cpf-origem').value || '***.***.***-**';
-      navegarPara('view-comprovante-final');
-    }
-
-    // ===== PWA MANIFEST INLINE COM ÍCONES LOCAIS =====
-    (function(){
-      var manifest = {
-        name: "Nubank",
-        short_name: "Nubank",
-        description: "App simulador Nubank - Área Pix, transferências e notificações",
-        display: "standalone",
-        start_url: "./",
-        background_color: "#000000",        theme_color: "#5f259f",
-        orientation: "portrait",
-        icons: [
-          { src: "./icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
-          { src: "./icon-512.png", sizes: "512x512", type: "image/png", purpose: "any maskable" }
-        ],
-        lang: "pt-BR",
-        dir: "ltr"
-      };
-      var blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
-      var url = URL.createObjectURL(blob);
-      var el = document.getElementById('pwa-manifest');
-      if(el) el.href = url;
-    })();
-
-    // ===== SERVICE WORKER INLINE =====
-    (function(){
-      if('serviceWorker' in navigator){
-        var swCode = `
-self.addEventListener('install', function(e){ self.skipWaiting(); });
-self.addEventListener('activate', function(e){ e.waitUntil(clients.claim()); });
-self.addEventListener('fetch', function(e){
-  e.respondWith(
-    caches.open('nubank-v1').then(function(cache){
-      return cache.match(e.request).then(function(resp){
-        return resp || fetch(e.request).then(function(r){
-          if(r && r.status === 200 && r.type === 'basic') cache.put(e.request, r.clone());
-          return r;
-        });
-      });
-    })
-  );
-});
-self.addEventListener('push', function(e){
-  var data = {};
-  try{ data = e.data.json(); } catch(ex){ data = {title:'Nubank', body: e.data ? e.data.text() : 'Nova notificação'}; }
-  e.waitUntil(self.registration.showNotification(data.title||'Nubank', {
-    body: data.body||'',
-    icon: './icon-192.png',
-    badge: './icon-192.png',
-    vibrate: [200,100,200],
-    tag: data.tag||'nubank',
-    requireInteraction: false
-  }));
-});`;
-        var blob = new Blob([swCode], {type:'text/javascript'});
-        var swUrl = URL.createObjectURL(blob);
-        navigator.serviceWorker.register(swUrl).then(function(reg){
-          console.log('SW registered', reg.scope);
-          window._swReg = reg;        }).catch(function(e){ console.warn('SW error', e); });
-      }
-    })();
-
-    // ===== PWA INSTALL PROMPT =====
-    window.addEventListener('beforeinstallprompt', function(e){
-      e.preventDefault();
-      _deferredInstall = e;
-      var btn = document.getElementById('btn-instalar-pwa');
-      if(btn) btn.style.display = 'flex';
-    });
-    window.addEventListener('appinstalled', function(){
-      var btn = document.getElementById('btn-instalar-pwa');
-      if(btn) btn.style.display = 'none';
-      _deferredInstall = null;
-    });
-    function instalarPWA(){
-      if(_deferredInstall){
-        _deferredInstall.prompt();
-        _deferredInstall.userChoice.then(function(r){ _deferredInstall = null; });
-      } else {
-        var ua = navigator.userAgent;
-        if(/iphone|ipad|ipod/i.test(ua)){
-          alert('Para instalar no iOS:\n1. Toque no botão Compartilhar (caixa com seta)\n2. Selecione "Adicionar à Tela de Início"\n3. Toque em "Adicionar"');
+      const icone = document.getElementById('nu-olho');
+      icone.textContent = saldoEscondido ? 'visibility_off' : 'visibility';
+      document.querySelectorAll('.main-balance-value, .section-value').forEach(el => {
+        if(saldoEscondido) {
+          el.classList.add('embaçado');
         } else {
-          alert('Para instalar:\n• No Chrome: menu (⋮) → "Adicionar à tela inicial"\n• No Samsung Internet: menu → "Adicionar página a" → "Tela inicial"');
+          el.classList.remove('embaçado');
         }
-      }
-    }
-
-    // ===== EDIÇÃO DE SALDOS — MODAL UNIVERSAL =====
-    function criarModalSaldo(){
-      if(document.getElementById('modal-editar-saldo')) return;
-      var modal = document.createElement('div');
-      modal.id = 'modal-editar-saldo';
-      modal.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:99999;align-items:flex-end;justify-content:center;max-width:450px;margin:0 auto;';
-      modal.innerHTML = '<div style="background:#1c1c1e;border-radius:22px 22px 0 0;padding:28px 24px 36px 24px;width:100%;max-width:450px;">' +
-        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">' +
-        '<span style="font-size:17px;font-weight:700;color:#fff;" id="modal-saldo-titulo">Editar valor</span>' +
-        '<span style="color:#888;font-size:26px;cursor:pointer;line-height:1;" onclick="fecharModalSaldo()">&times;</span>' +
-        '</div>' +
-        '<input id="modal-saldo-input" type="text" inputmode="decimal" ' +
-        'style="width:100%;background:#000;border:1.5px solid #820ad1;border-radius:12px;padding:16px 18px;color:#fff;font-size:22px;font-weight:700;outline:none;text-align:center;" ' +
-        'placeholder="R$ 0,00">' +
-        '<button onclick="salvarModalSaldo()" style="margin-top:20px;width:100%;background:#820ad1;color:#fff;border:none;border-radius:22px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;">Salvar</button>' +
-        '</div>';
-      modal.addEventListener('click', function(e){ if(e.target===modal) fecharModalSaldo(); });
-      document.body.appendChild(modal);
-    }
-    function abrirModalSaldo(el, titulo){
-      criarModalSaldo();
-      _modalSaldoTarget = el;
-      var modal = document.getElementById('modal-editar-saldo');
-      var inp = document.getElementById('modal-saldo-input');
-      document.getElementById('modal-saldo-titulo').textContent = titulo || 'Editar valor';
-      inp.value = el.textContent.trim();
-      modal.style.display = 'flex';
-      setTimeout(function(){ inp.focus(); inp.select(); }, 100);
-    }
-
-    function fecharModalSaldo(){
-      var modal = document.getElementById('modal-editar-saldo');
-      if(modal) modal.style.display = 'none';
-      _modalSaldoTarget = null;
-    }
-
-    function salvarModalSaldo(){
-      var inp = document.getElementById('modal-saldo-input');
-      if(_modalSaldoTarget && inp){
-        var val = inp.value.trim();
-        _modalSaldoTarget.textContent = val;
-        if(_modalSaldoTarget.id){
-          localStorage.setItem('nu_saldo_' + _modalSaldoTarget.id, val);
-        }
-      }
-      fecharModalSaldo();
-    }
-
-    function tornarSaldoEditavel(id, titulo){
-      var el = document.getElementById(id);
-      if(!el) return;
-      var saved = localStorage.getItem('nu_saldo_' + id);
-      if(saved) el.textContent = saved;
-      el.style.cursor = 'pointer';
-      el.title = 'Toque para editar';
-      el.addEventListener('click', function(e){
-        e.stopPropagation();
-        abrirModalSaldo(el, titulo);
       });
+    }
+
+    function abrirConfigCompleta() {
+      document.getElementById('tela-config-completa').classList.add('ativa');
+    }
+    function fecharConfigCompleta() {
+      document.getElementById('tela-config-completa').classList.remove('ativa');
+    }
+
+    function salvarConfiguracoesCompleta() {
+      let nome = document.getElementById('cfg-nome-completo').value;
+      if(nome) {
+        document.getElementById('nu-username').textContent = "Olá, " + nome.split(' ')[0];
+      }
+      let cpfOrigem = document.getElementById('cfg-cpf-origem').value;
+      if(cpfOrigem) cpfOrigemGlobal = cpfOrigem;
+      
+      let destNome = document.getElementById('cfg-dest-nome').value;
+      if(destNome) nomeDestinatarioGlobal = destNome;
+      let destCpf = document.getElementById('cfg-dest-cpf').value;
+      if(destCpf) cpfDestinatarioGlobal = destCpf;
+      let destBanco = document.getElementById('cfg-dest-banco').value;
+      if(destBanco) bancoDestinatarioGlobal = destBanco;
+      let destChave = document.getElementById('cfg-dest-chave').value;
+      if(destChave) chavePixGlobal = destChave;
+
+      salvarConfig();
+      fecharConfigCompleta();
+    }
+
+    function uploadFoto(e) {
+      const file = e.target.files[0];
+      if(file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          profilePhotoData = evt.target.result;
+          document.getElementById('profile-photo-preview').src = profilePhotoData;
+          document.getElementById('profile-photo-preview').style.display = 'block';
+          document.getElementById('photo-placeholder').style.display = 'none';
+          
+          document.getElementById('header-profile-photo').src = profilePhotoData;
+          document.getElementById('header-profile-photo').style.display = 'block';
+          document.getElementById('header-profile-icon').style.display = 'none';
+          salvarConfig();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function salvarConfig() {
+      localStorage.setItem('nu_nome', document.getElementById('cfg-nome-completo').value);
+      localStorage.setItem('nu_saldo', document.getElementById('nu-saldo-main').getAttribute('data-valor'));
+      localStorage.setItem('nu_foto', profilePhotoData || '');
+      localStorage.setItem('nu_cpf_origem', cpfOrigemGlobal);
+    }
+
+    function carregarConfig() {
+      let nome = localStorage.getItem('nu_nome');
+      if(nome) {
+        document.getElementById('cfg-nome-completo').value = nome;
+        document.getElementById('nu-username').textContent = "Olá, " + nome.split(' ')[0];
+      }
+      let saldo = localStorage.getItem('nu_saldo');
+      if(saldo) {
+        let val = parseFloat(saldo);
+        document.getElementById('nu-saldo-main').setAttribute('data-valor', val.toFixed(2));
+        document.getElementById('nu-saldo-main').textContent = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        document.getElementById('nu-saldo-tela2').setAttribute('data-valor', val.toFixed(2));
+        document.getElementById('nu-saldo-tela2').textContent = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      }
+      let foto = localStorage.getItem('nu_foto');
+      if(foto) {
+        profilePhotoData = foto;
+        document.getElementById('profile-photo-preview').src = foto;
+        document.getElementById('profile-photo-preview').style.display = 'block';
+        document.getElementById('photo-placeholder').style.display = 'none';
+        
+        document.getElementById('header-profile-photo').src = foto;
+        document.getElementById('header-profile-photo').style.display = 'block';
+        document.getElementById('header-profile-icon').style.display = 'none';
+      }
+      let cpfOrg = localStorage.getItem('nu_cpf_origem');
+      if(cpfOrg) {
+        cpfOrigemGlobal = cpfOrg;
+        document.getElementById('cfg-cpf-origem').value = cpfOrg;
+      }
+    }
+
+    function pressionarSenhaNu(n) {
+      if(senhaDigitada.length < 4) {
+        senhaDigitada += n;
+        document.getElementById('dot-' + senhaDigitada.length).classList.add('preenchido');
+      }
+      if(senhaDigitada.length === 4) {
+        setTimeout(iniciarLoadingTransferencia, 300);
+      }
+    }
+
+    function limparSenhaNu() {
+      if(senhaDigitada.length > 0) {
+        document.getElementById('dot-' + senhaDigitada.length).classList.remove('preenchido');
+        senhaDigitada = senhaDigitada.slice(0, -1);
+      }
+    }
+
+    function iniciarLoadingTransferencia() {
+      senhaDigitada = "";
+      for(let i=1; i<=4; i++) document.getElementById('dot-' + i).classList.remove('preenchido');
+      
+      document.querySelectorAll('.view-tela').forEach(el => el.classList.remove('ativa'));
+      document.getElementById('view-loading-nu-spa').classList.add('ativa');
+      
+      const lblLoading = document.getElementById('lbl-loading-dinamico');
+      lblLoading.textContent = "Transferindo...";
+      
+      const bar = document.getElementById('barra-progresso-purple-id');
+      bar.style.transition = 'width 1.2s linear';
+      bar.style.width = '0%';
+      setTimeout(() => { bar.style.width = '100%'; }, 50);
+      
+      setTimeout(() => {
+        lblLoading.textContent = "Gerando comprovante...";
+        bar.style.transition = 'width 0.8s linear';
+        bar.style.width = '0%';
+        setTimeout(() => { bar.style.width = '100%'; }, 50);
+      }, 1300);
+
+      setTimeout(() => {
+        lblLoading.textContent = "Pronto!";
+        bar.style.transition = 'width 0.3s linear';
+        bar.style.width = '100%';
+      }, 2100);
+
+      setTimeout(() => {
+        document.getElementById('view-loading-nu-spa').classList.remove('ativa');
+        document.getElementById('suc-novo-nome').textContent = nomeDestinatarioGlobal;
+        document.getElementById('suc-novo-valor').textContent = document.getElementById('input-dinheiro-fluxo').value;
+        navegarPara('view-sucesso-novo');
+      }, 2600);
+    }
+
+    function gerarEIrParaComprovante() {
+      let valorEnvio = document.getElementById('input-dinheiro-fluxo').value;
+      document.getElementById('c-real-valor').textContent = valorEnvio;
+      document.getElementById('c-real-dest-nome').textContent = nomeDestinatarioGlobal.toUpperCase();
+      document.getElementById('c-real-dest-banco').textContent = bancoDestinatarioGlobal.toUpperCase();
+      document.getElementById('c-real-dest-cpf').textContent = cpfDestinatarioGlobal;
+      document.getElementById('c-real-dest-chave').textContent = chavePixGlobal;
+      document.getElementById('c-real-ori-cpf').textContent = cpfOrigemGlobal;
+      
+      let idGerado = 'E1823612020260914' + Math.floor(Math.random() * 900000000 + 100000000) + 's194dca9132';
+      document.getElementById('c-real-id-top').textContent = idGerado;
+      document.getElementById('c-real-id-bottom').textContent = idGerado;
+      
+      let agora = new Date();
+      let meses = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
+      let dia = String(agora.getDate()).padStart(2, '0');
+      let mes = meses[agora.getMonth()];
+      let ano = agora.getFullYear();
+      let hora = String(agora.getHours()).padStart(2, '0');
+      let min = String(agora.getMinutes()).padStart(2, '0');
+      let seg = String(agora.getSeconds()).padStart(2, '0');
+      document.getElementById('c-real-data-hora').textContent = `${dia} ${mes} ${ano} - ${hora}:${min}:${seg}`;
+
+      navegarPara('view-comprovante-final');
     }
   </script>
 </body>
-  </html>
+</html>
